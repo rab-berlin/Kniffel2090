@@ -11,8 +11,8 @@ Bestimmte Programmabschnitte lösen ähnliche Aufgaben, dann ist es sinnvoll, zu
 - Unterprogramme können keine weiteren Unterprogramme aufrufen
 - ein RETURN ohne vorheriges CALL ist unzulässig
 
-Im Anleitungsbuch 1. Teil, S. 74 heißt es dazu **Wichtig: In einem Unterprogramm darf kein CALL-Befehl vorhanden sein, weil sonst eine "Endlosschleife" entsteht.**
+Im Anleitungsbuch 1. Teil, S. 74 heißt es dazu: **Wichtig: In einem Unterprogramm darf kein CALL-Befehl vorhanden sein, weil sonst eine "Endlosschleife" entsteht.**
 
-Als jugendlicher Programmierschüler schien mir diese Warnung ausreichend bedrohlich - wer will schon in einer **Endlosschleife** 😱 gefangen sein?! Damals nahezu das elfte Gebot, heutzutage - nach vielen mutwillig verbogenen Pointern und übergelaufenen Arrays - sehe ich das etwas gelassener...
+Als jugendlicher Programmierschüler schien mir diese Warnung ausreichend bedrohlich - wer will schon in einer *Endlosschleife* 😱 gefangen sein?! Damals nahezu das elfte Gebot, heutzutage - nach vielen mutwillig verbogenen Pointern und übergelaufenen Arrays - sehe ich das etwas gelassener...
 
 Und hab's einfach mal ausprobiert.
