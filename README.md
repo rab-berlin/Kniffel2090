@@ -22,3 +22,19 @@ Dieser Warnhinweis schien mir ausreichend bedrohlich - wer will schon gefangen s
 Damals weder angezweifelt noch je wissentlich übertreten, sehe ich diese Gebote heutzutage - nach vielen undeklarierten Variablen, verbogenen Pointern und übergelaufenen Arrays - einen Tick gelassener...
 
 Und hab's einfach mal riskiert. What can possibly go wrong? 
+
+...
+
+## Harte Regeln
+
+Mit den Ziffern 1-5 werden die Würfel ausgewählt, die zurück in den Becher, also erneut geworfen werden sollen. Wenn ein Würfel in den Becher gelegt wird, wird seine Augenzahl im Display durch eine 0 ersetzt. Aber Vorsicht - einmal einen Würfel gewählt gibt´s kein Zurück. Für eine Undo-Funktion war einfach kein Platz - weder Programmschritte noch Register.
+
+## Nächster Wurf
+
+Der nächste Wurf wird mit der Ziffer 0 gestartet.
+
+## Eintragen
+
+Nach dem dritten Wurf mit 1-4 auf der jeweils aktuellen Blockseite.
+
+
