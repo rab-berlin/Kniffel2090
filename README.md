@@ -2,6 +2,10 @@
 
 Kniffel auf dem Busch Microtronic 2090
 
+Work in progress... Die Erkennung von Full-House fehlt noch. Der Rest läuft schon ganz gut. 
+
+Wie üblich müssen erstmal ein paar Programmschritte anderswo eingespart werden... :)
+
 ## Bedingtes Unterprogramm
 
 Keine Ahnung, ob es sowas gibt. Falls nicht, hab ich's gerade erfunden...
