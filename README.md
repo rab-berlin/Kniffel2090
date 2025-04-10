@@ -49,15 +49,23 @@ Die intuitive, aber weniger ökonomische Lösung wäre: Zunächst die 10er-Stell
 Da die Punkte oben bereits in der Gesamtpunktzahl enthalten sind, können wir mit diesen Registern ein bisschen spielen, ohne was kaputt zu machen. Wir wollen am Ende erreichen, dass nur ein Register geprüft werden muss.
 
 ```
-
+ADDI #1,OBEN1
+ADC OBEN2
+SUBI #4,OBEN2
+BRC ZeigeGesamt
+MOVI #2,SUMME2
+MOVI #3,SUMME1
+CALL AddiereAugen
 
 ```
 
 Also addieren wir zum Wert im 1er-Register einfach eine elegante 1. Einen Übertrag, sofern vorhanden, addieren wir zum 10er-Register. Für den Schwellenwert ergäbe sich dann hexadezimal 3F + 1 = 40.
 
-Anschließend muss nur noch geprüft werden, ob die 10er-Stelle einen Wert größer als 3 enthält. Falls ja, gibt's den Bonus, falls nein, Pech gehabt.
+Anschließend muss nur noch geprüft werden, ob die 10er-Stelle einen Wert größer als 3 enthält. Falls ja, gibt's den Bonus, falls nein, Pech gehabt. 
 
-Tipp: alle Schwellenwerte können auf diese Weise einstellig ("ein-registerig") überprüfbar gemacht werden, indem wir genau den Wert addieren, der das nächsthöhere Register kippen lässt.
+Diese Prüfung erledigen wir durch Subtraktion des Wertes 4. Wenn dabei ein Unterlauf entsteht, also weniger als 4 im 10er-Register war, wird das Carry-Flag gesetzt und ohne Bonus zur Anzeige der Gesamtsumme gesprungen. Ansonsten wird der Bonus gegeben (unter Verwendung des bereits vorhandenen Additions-Unterprogramms).
+
+Tipp: Alle Schwellenwerte können auf diese Weise einstellig ("ein-registerig") überprüfbar gemacht werden, indem wir genau den Wert addieren, der das nächsthöhere Register kippen lässt.
 
 
 
