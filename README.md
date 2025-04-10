@@ -45,7 +45,7 @@ Nach dem dritten Wurf muss in den Block eingetragen werden. Mit der Taste 1-4 au
 
 # Besonderheiten
 
-## Erkennung Full House
+## Volles Haus?
 
 Das hat mir lange Kopfzerbrechen bereitet. Ich habe eine ganze Weile mit zusätzlichen Registern und Zählern experimentiert, nur um die Übersicht über die verschiedenen Paschs (Päsche? Paschas? Paschanten?) zu behalten. Das wurde nix, oder es wurde was, war aber viel zu lang.
 
@@ -71,7 +71,7 @@ ADDI #1,FIGUR2       Full House erkannt, Bit setzen
 
 Muss man aber auch erstmal drauf kommen... 😂
 
-## Block voll? 
+## Voller Block? 
 
 Der Kniffelblock besteht aus vier Segmenten (Seiten), die jeweils ein (Speicher-)Register belegen. Im Laufe eines Spiels werden die einzelnen Felder (Bits) jeder Blockseite nach und nach "ausgeknippst". Dadurch wird protokolliert, ob in das jeweilige Feld des Kniffelblocks schon etwas eingetragen wurde.
 
@@ -89,7 +89,7 @@ GOTO Beginn
 ```
 
 
-## Bonus
+## Voller Bonus?
 
 Wenn im oberen Block 63 Punkte oder mehr erzielt werden, erhält man 35 Punkte als Bonus. Wie kann man diese Prüfung mit möglichst wenig Programmschritten durchführen?
 
