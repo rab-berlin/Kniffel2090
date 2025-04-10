@@ -36,6 +36,21 @@ Der nächste Wurf wird mit der Ziffer 0 gestartet.
 
 Nach dem dritten Wurf muss in den Block eingetragen werden. Mit der Taste 1-4 auf der jeweils aktiven Blockseite.
 
+# Besonderheiten
+
+## Bonus
+
+Wenn im oberen Block 63 Punkte oder mehr erzielt werden, erhält man 35 Punkte als Bonus. Wie kann man diese Prüfung mit möglichst wenig Programmschritten durchführen?
+
+Die Summe der oben erzielten Punkte ist hexadezimal in den Speicherregistern 1 und 2 abgelegt. Wenn dort 3F hex oder mehr steht, dann soll der Bonus zur Gesamtsumme addiert werden.
+
+Die einfache, aber weniger ökonomische Lösung wäre: Zunächst die 10er-Stelle prüfen, danach - falls die 10er-Stelle genau 3 ist - auch die 1er-Stelle prüfen. Unterm Strich viele Vergleiche und bedingte Sprünge für beide Register.
+
+
+
+
+
+
 
 ## Bedingtes Unterprogramm
 
