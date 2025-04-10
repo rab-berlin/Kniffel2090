@@ -65,7 +65,7 @@ Anschließend muss nur noch geprüft werden, ob die 10er-Stelle einen Wert grö�
 
 Diese Prüfung erledigen wir durch Subtraktion des Wertes 4. Wenn dabei ein Unterlauf entsteht, also weniger als 4 im 10er-Register war, wird das Carry-Flag gesetzt und ohne Bonus zur Anzeige der Gesamtsumme gesprungen. Ansonsten wird der Bonus gegeben (unter Verwendung des bereits vorhandenen Additions-Unterprogramms).
 
-Tipp: Alle Schwellenwerte, die sich über mehrere Register erstrecken, können auf diese Weise einstellig (*"ein-registerig"*) überprüfbar gemacht werden. Wie addieren genau einen solchen Wert, mit dem das jeweils höchstwertige Register kippt. Dann muss nur noch dieses Register überprüft werden.
+Goldkörnchen zum Mitschreiben: Alle Schwellenwerte, die sich über mehrere Register erstrecken, können auf diese Weise einstellig (*"ein-registerig"*) überprüfbar gemacht werden. Wir addieren genau einen solchen Wert, mit dem das jeweils höchstwertige Register kippt. Dann muss nur noch dieses Register überprüft werden.
 
 
 
