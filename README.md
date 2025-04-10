@@ -2,9 +2,40 @@
 
 Kniffel auf dem Busch Microtronic 2090
 
-Work in progress... Die Erkennung von Full-House fehlt noch. Der Rest läuft schon ganz gut. 
+Doku wird noch ergänzt... Wer´s trotzdem schon testen mag, nur zu! :)
 
-Wie üblich müssen erstmal ein paar Programmschritte anderswo eingespart werden... :)
+Die Kniffelregeln zu erklären, spare ich mir. Wer´s nicht kennt, möge einschlägig nachsehen... 
+
+## Kniffelblock
+
+Der Kniffelblock wird durch die LEDs an den Ausgängen und den jeweiligen Buchstaben im Display repräsentiert. 
+
+```
+  Aktive
+Blockseite          Kniffelblock
+
+    C               1er, 2er, 3er, 4er
+    D               5er, 6er, 3-Pasch, 4-Pasch
+    E               Full House, kl. Str., gr. Str., Kniffel
+    F               Chance
+```
+
+Eine leuchtende LED bedeutet, das entsprechende Feld im Block ist noch frei. Wenn die entsprechende LED nicht mehr leuchtet, wurde die *Figur* schon eingetragen oder gestrichen.
+
+Die aktive Blockseite kann jederzeit mit den Tasten C, D, E und F gewechselt werden (also während der Würfel- oder Eintrag-Phase).
+
+## Harte Regeln
+
+Mit den Ziffern 1-5 werden die Würfel ausgewählt, die zurück in den Becher, also erneut geworfen werden sollen. Wenn ein Würfel in den Becher gelegt wird, wird seine Augenzahl im Display durch eine 0 ersetzt. Aber Vorsicht - einmal einen Würfel gewählt gibt´s kein Zurück. Für eine Undo-Funktion war einfach kein Platz - weder Programmschritte noch Register.
+
+## Nächster Wurf
+
+Der nächste Wurf wird mit der Ziffer 0 gestartet.
+
+## Eintragen
+
+Nach dem dritten Wurf mit der Taste 1-4 auf der jeweils aktiven Blockseite.
+
 
 ## Bedingtes Unterprogramm
 
@@ -25,16 +56,5 @@ Und hab's einfach mal riskiert. What can possibly go wrong?
 
 ...
 
-## Harte Regeln
-
-Mit den Ziffern 1-5 werden die Würfel ausgewählt, die zurück in den Becher, also erneut geworfen werden sollen. Wenn ein Würfel in den Becher gelegt wird, wird seine Augenzahl im Display durch eine 0 ersetzt. Aber Vorsicht - einmal einen Würfel gewählt gibt´s kein Zurück. Für eine Undo-Funktion war einfach kein Platz - weder Programmschritte noch Register.
-
-## Nächster Wurf
-
-Der nächste Wurf wird mit der Ziffer 0 gestartet.
-
-## Eintragen
-
-Nach dem dritten Wurf mit 1-4 auf der jeweils aktuellen Blockseite.
 
 
