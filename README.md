@@ -8,9 +8,9 @@ Die Kniffelregeln zu erklären, spare ich mir. Wer´s nicht kennt, möge einschl
 
 ## Bubblesort reloaded
 
-Nachdem ich im Vorgängerprojekt "Mensch ärgere dich nicht" zunächst einen Bubblesort-Algorithmus implementiert hatte, nur um dann festzustellen, dass die volle Sortier-Power gar nicht nötig war, musste es diesmal einfach Kniffel sein.
+Nachdem ich im Vorgängerprojekt "Mensch ärgere dich nicht" zunächst erwartungsfroh einen Bubblesort-Algorithmus implementiert hatte, nur um dann festzustellen, dass die volle Sortier-Leistung gar nicht benötigt wird, musste es diesmal einfach eine echte Herausforderung sein. Also Kniffel.
 
-Denn nach jedem Wurf liegen die Würfel garantiert vollständig unsortiert auf dem Tisch. Für alle weiteren Berechnungen und Auswertungen brauchen wir diesmal den ganzen Bubblesort. Fünf Würfel, vier Durchläufe. Juhuuu.
+Nur hier kann der Microtronic die geballte Rechenpower seines 500 kHz-Elektronengehirns endlich entfesseln, denn nach jedem Wurf liegen die Würfel garantiert vollständig unsortiert auf dem Tisch. Für alle weiteren Berechnungen und Auswertungen brauchen wir diesmal den echten Bubblesort. Fünf Würfel, vier Durchläufe. Plus ein Bonus-Durchlauf für allerlei Dies und Das. Juhuuu.
 
 
 ## Kniffelblock
