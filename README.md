@@ -38,6 +38,33 @@ Nach dem dritten Wurf muss in den Block eingetragen werden. Mit der Taste 1-4 au
 
 # Besonderheiten
 
+## Erkennung Full House
+
+Das hat mir lange Kopfzerbrechen bereitet. Ich habe eine ganze Weile mit zusätzlichen Registern und Zählern experimentiert, nur um die Übersicht über die verschiedenen Paschs (Päsche? Paschas? Paschanten?) zu behalten. Das wurde nix, oder es wurde was, war aber viel zu lang.
+
+Im Prinzip ist ein Full House (FH) ja nichts anderes als ein Dreier mit Zusatzpasch. Dieser zusätzliche Pasch kann aber "vorne" oder "hinten" sein. Wenn die Würfel sortiert vorliegen, sind somit diese beiden Varianten möglich:
+
+```
+PP DDD     (P - Pasch, D - Dreier)
+DDD PP
+```
+
+Nehmen wir nun an, wir wüssten bereits, dass im Wurf ein Dreier vorliegt. Wie erkennen wir jetzt am einfachsten, ob auch ein FH vorliegt?
+
+Letztlich dann doch trivial. Der erste und zweite Würfel sowie der vierte und fünfte Würfel müssen gleich sein - dann ist der gesamte Wurf ein FH.
+
+```
+ADDI #4,FIGUR1       Dreier wurde erkannt, Bit setzen
+CMP W2,W1            W2 kleiner als W1?
+BRC Eintrag          dann kein Pasch "vorne", kein FH
+CMP W5,W4            W5 kleiner als W4?
+BRC Eintrag          dann kein Pasch "hinten", kein FH
+ADDI #1,FIGUR2       Full House erkannt, Bit setzen
+```
+
+Muss man aber auch erstmal drauf kommen... 😂
+
+
 ## Bonus
 
 Wenn im oberen Block 63 Punkte oder mehr erzielt werden, erhält man 35 Punkte als Bonus. Wie kann man diese Prüfung mit möglichst wenig Programmschritten durchführen?
