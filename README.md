@@ -6,6 +6,13 @@ Doku wird noch ergänzt... Wer´s trotzdem schon testen mag, nur zu! :)
 
 Die Kniffelregeln zu erklären, spare ich mir. Wer´s nicht kennt, möge einschlägig nachsehen... 
 
+## Bubblesort reloaded
+
+Nachdem ich im Vorgängerprojekt "Mensch ärgere dich nicht" zunächst einen Bubblesort-Algorithmus implementiert hatte, nur um dann festzustellen, dass die volle Sortier-Power gar nicht nötig war, musste es diesmal einfach Kniffel sein.
+
+Denn nach jedem Wurf liegen die Würfel garantiert vollständig unsortiert auf dem Tisch. Für alle weiteren Berechnungen und Auswertungen brauchen wir diesmal den ganzen Bubblesort. Fünf Würfel, vier Durchläufe. Juhuuu.
+
+
 ## Kniffelblock
 
 Der Kniffelblock wird durch die LEDs an den Ausgängen und den jeweiligen Buchstaben im Display repräsentiert. 
