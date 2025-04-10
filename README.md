@@ -32,9 +32,9 @@ Mit den Ziffern 1-5 werden die Würfel ausgewählt, die zurück in den Becher, a
 
 Der nächste Wurf wird mit der Ziffer 0 gestartet.
 
-## Eintragen
+## Alea iacta est
 
-Nach dem dritten Wurf mit der Taste 1-4 auf der jeweils aktiven Blockseite.
+Nach dem dritten Wurf muss in den Block eingetragen werden. Mit der Taste 1-4 auf der jeweils aktiven Blockseite.
 
 
 ## Bedingtes Unterprogramm
