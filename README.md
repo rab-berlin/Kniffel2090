@@ -64,6 +64,23 @@ ADDI #1,FIGUR2       Full House erkannt, Bit setzen
 
 Muss man aber auch erstmal drauf kommen... 😂
 
+## Block voll? 
+
+Der Kniffelblock besteht aus vier Segmenten (Seiten), die jeweils ein (Speicher-)Register belegen. Im Laufe eines Spiels werden die einzelnen Felder (Bits) jeder Blockseite nach und nach "ausgeknippst". Dadurch wird protokolliert, ob in das jeweilige Feld des Kniffelblocks schon etwas eingetragen wurde.
+
+Wenn in alle Felder einer Blockseite ein Wert eingetragen wurde, dann sind alle Bits dieses Registers nicht mehr gesetzt, also ist der Wert im Register dann 0. Sind alle Blockseiten gefüllt, dann haben alle Register den Wert 0. 
+
+Wie testen wir nach jedem Wurf/Eintrag, ob das Spiel zuende ist?
+
+```
+OR BLOCK1,Z1
+OR BLOCK2,Z1
+OR BLOCK3,Z1
+OR BLOCK4,Z1
+BRZ Schluss
+GOTO Beginn
+```
+
 
 ## Bonus
 
