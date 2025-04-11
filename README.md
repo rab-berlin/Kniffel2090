@@ -33,7 +33,9 @@ Die aktive Blockseite kann jederzeit mit den Tasten C, D, E und F gewechselt wer
 
 ## Harte Regeln
 
-Mit den Ziffern 1-5 werden die Würfel ausgewählt, die zurück in den Becher, also erneut geworfen werden sollen. Wenn ein Würfel in den Becher gelegt wird, wird seine Augenzahl im Display durch eine 0 ersetzt. Aber Vorsicht - einmal einen Würfel gewählt gibt´s kein Zurück. Für eine Undo-Funktion war einfach kein Platz - weder Programmschritte noch Register.
+Mit den Ziffern 1-5 werden die Würfel ausgewählt, die zurück in den Becher, also erneut geworfen werden sollen. Wenn ein Würfel in den Becher gelegt wird, wird seine Augenzahl im Display durch eine 0 ersetzt. 
+
+Aber Vorsicht - einmal einen Würfel gewählt gibt´s kein Zurück. Für eine Undo-Funktion war einfach kein Platz - weder Programmschritte noch Register.
 
 ## Nächster Wurf
 
@@ -41,7 +43,35 @@ Der nächste Wurf wird mit der Ziffer 0 gestartet.
 
 ## Alea iacta est
 
-Nach dem dritten Wurf muss in den Block eingetragen werden. Mit der Taste 1-4 auf der jeweils aktiven Blockseite.
+Nach dem dritten Wurf wird das Ergebnis in den Block eingetragen. Mit den Tasten C-F kann die aktive Blockseite beliebig oft gewechselt werden. Leuchtende LEDs an den Ausgängen zeigen an, welche Felder auf der aktuellen Blockseite noch frei sind. Dazu ein Beispiel: 
+
+Nach dem dritten Wurf zeigt das Display
+
+2 3 4 5 6 C
+
+An den Ausgängen leuchten die LEDs
+
+1 2 3 4
+x - x x 
+
+Die aktive Blockseite ist C, also wird das erste Segment des Kniffelblocks (1er, 2er, 3er, 4er) durch die Ausgänge dargestellt. Durch die LEDs erfahren wir, dass die 2er schon eingetragen wurden, die anderen Felder sind offenbar noch frei. 
+
+Wir wechseln die aktive Blockseite, weil wir ja eine *Große Straße* gewürfelt haben. Dazu drücken wir die Taste E. Dann zeigt das Display
+
+2 3 4 5 6 E
+
+und die LEDs an den Ausgänge zeigen
+
+1 2 3 4
+- x - x
+
+Also sind *Full House* und *Große Straße* schon eingetragen (oder gestrichen), weil die LEDs an den Ausgängen 1 und 3 nicht mehr leuchten. Ausgänge 2 und 4 leuchten, also sind *Kleine Straße* und *Kniffel* noch frei.
+
+Einen *Kniffel* haben wir nicht getroffen, eine *Große Straße* können wir nicht mehr eintragen, allerdings ist eine *Große Straße* gleichzeitig auch immer eine *Kleine Straße*.  
+
+Mit den Tasten 1-4 wird das Ergebnis des Wurfs auf der aktiven Blockseite eingetragen. Testhalber drücken wir die Taste 1 und stellen fest, dass das Display sich nicht verändert - denn das Feld für *Full House* ist im Block schon belegt, daher wird die Auswahl nicht akzeptiert.
+
+
 
 # Besonderheiten
 
