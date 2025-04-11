@@ -29,7 +29,7 @@ Blockseite          Kniffelblock
 
 Eine leuchtende LED bedeutet, das entsprechende Feld im Block ist noch frei. Wenn die entsprechende LED nicht mehr leuchtet, wurde die *Figur* schon eingetragen oder gestrichen.
 
-Die aktive Blockseite kann jederzeit mit den Tasten C, D, E und F gewechselt werden (also während der Würfel- oder Eintrag-Phase).
+Die aktive Blockseite kann jederzeit und beliebig mit den Tasten C, D, E und F gewechselt werden (also während der Würfel- oder Eintrag-Phase).
 
 ## Harte Regeln
 
