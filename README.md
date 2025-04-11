@@ -46,25 +46,25 @@ Der nächste Wurf wird mit der Ziffer 0 gestartet.
 Nach dem dritten Wurf wird das Ergebnis in den Block eingetragen. Mit den Tasten C-F kann die aktive Blockseite beliebig oft gewechselt werden. Leuchtende LEDs an den Ausgängen zeigen an, welche Felder auf der aktuellen Blockseite noch frei sind. Dazu ein Beispiel: 
 
 Nach dem dritten Wurf zeigt das Display
-
+```
 2 3 4 5 6 C
-
+```
 An den Ausgängen leuchten die LEDs
-
+```
 1 2 3 4
 x - x x 
-
+```
 Die aktive Blockseite ist C, also wird das erste Segment des Kniffelblocks (1er, 2er, 3er, 4er) durch die Ausgänge dargestellt. Durch die LEDs erfahren wir, dass die 2er schon eingetragen wurden, die anderen Felder sind offenbar noch frei. 
 
 Wir wechseln die aktive Blockseite, weil wir ja eine *Große Straße* gewürfelt haben. Dazu drücken wir die Taste E. Dann zeigt das Display
-
+```
 2 3 4 5 6 E
-
+```
 und die LEDs an den Ausgänge zeigen
-
+```
 1 2 3 4
 - x - x
-
+```
 Also sind *Full House* und *Große Straße* schon eingetragen (oder gestrichen), weil die LEDs an den Ausgängen 1 und 3 nicht mehr leuchten. Ausgänge 2 und 4 leuchten, also sind *Kleine Straße* und *Kniffel* noch frei.
 
 Einen *Kniffel* haben wir nicht getroffen, eine *Große Straße* können wir nicht mehr eintragen, allerdings ist eine *Große Straße* gleichzeitig auch immer eine *Kleine Straße*.  
