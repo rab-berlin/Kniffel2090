@@ -1,4 +1,4 @@
-# Kniffel2090
+I# Kniffel2090
 
 Kniffel auf dem Busch Microtronic 2090
 
@@ -119,6 +119,8 @@ OR BLOCK4,Z1
 BRZ Schluss
 GOTO Beginn
 ```
+
+Wir nehmen ein leeres Register (Z1) und verodern dieses Register nacheinander mit allen vier Block-Registern. Wenn am Ende dieser Operation immer noch eine Null im Testregister Z1 steht, wissen wir, dass auch alle Block-Register leer sind (also kein Bit unsere schöne Anfangs-Null verschmutzt hat). Das bedeutet dann, dass alle Felder im Kniffel-Block ausgefüllt sind, also die Schlussabrechnung erfolgen kann.
 
 
 ## Voller Bonus?
