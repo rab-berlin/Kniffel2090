@@ -18,13 +18,25 @@ Hier kann der Microtronic endlich die geballte Rechenpower seines 500 kHz-Elektr
 Der Kniffelblock wird durch die LEDs an den Ausgängen und den jeweiligen Buchstaben im Display repräsentiert. 
 
 ```
-  Aktive
-Blockseite          Kniffelblock
 
-    C               1er, 2er, 3er, 4er
-    D               5er, 6er, 3-Pasch, 4-Pasch
-    E               Full House, kl. Str., gr. Str., Kniffel
-    F               Chance
+Kniffelblock       LED an Ausgang        Blockseite
+
+1er                      1                    C
+2er                      2
+3er                      3
+4er                      4
+
+5er                      1                    D
+6er                      2
+3-Pasch                  3
+4-Pasch                  4
+
+Full House               1                    E
+kl. Straße               2
+gr. Straße               3
+Kniffel                  4
+
+Chance                   1                    F
 ```
 
 Eine leuchtende LED bedeutet, das entsprechende Feld im Block ist noch frei. Wenn die entsprechende LED nicht mehr leuchtet, wurde die *Figur* schon eingetragen oder gestrichen.
