@@ -22,19 +22,19 @@ Der Kniffelblock wird durch die LEDs an den Ausgängen und den jeweiligen Buchst
 Kniffelblock       LED an Ausgang        Blockseite
 
 1er                      1                    C
-2er                      2
-3er                      3
-4er                      4
+2er                      2                    "
+3er                      3                    "
+4er                      4                    "
 
 5er                      1                    D
-6er                      2
-3-Pasch                  3
-4-Pasch                  4
+6er                      2                    "
+3-Pasch                  3                    "
+4-Pasch                  4                    "
 
 Full House               1                    E
-Kl. Straße               2
-Gr. Straße               3
-Kniffel                  4
+Kl. Straße               2                    "
+Gr. Straße               3                    "
+Kniffel                  4                    "
 
 Chance                   1                    F
 ```
