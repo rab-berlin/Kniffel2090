@@ -32,8 +32,8 @@ Kniffelblock       LED an Ausgang        Blockseite
 4-Pasch                  4
 
 Full House               1                    E
-kl. Straße               2
-gr. Straße               3
+Kl. Straße               2
+Gr. Straße               3
 Kniffel                  4
 
 Chance                   1                    F
