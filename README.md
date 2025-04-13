@@ -81,6 +81,16 @@ Mit der Taste 2 wählen wir schließlich die *Kleine Straße* aus. Daraufhin geh
 
 Intern hat der Microtronic die 30 Punkte für eine *Kleine Straße* zur Gesamtpunktzahl addiert - allerdings nur, wenn die geforderte Figur auch gewürfelt wurde, ansonsten würde das Feld gestrichen (also eingetragen, aber mit null Punkten).
 
+## Figur
+
+Bei Kniffel kommt es darauf an, mit fünf Würfeln und drei Würfen "Figuren" zu erzielen. Die beliebteste Figur ist natürlich der Kniffel selbst, also fünfmal die gleiche Augenzahl auf allen Würfeln.
+
+Der Microtronic soll nicht nur den Prozess des Würfelns unterstützen, sondern am Ende auch erkennen, welche Figuren getroffen wurden. 
+
+die getroffenen Figuren werden in Bitmustern gesperrt
+
+
+
 # Besonderheiten
 
 ## Bubblesort reloaded
