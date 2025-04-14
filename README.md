@@ -14,13 +14,11 @@ Du willst einfach nur spielen? Dann hier die Kurzfassung:
 - Mit den Tasten 1-5 wählst du die Würfel, die zurück in den Becher sollen.
 - Mit der Taste 0 startet du den nächsten Wurf.
 - Nach dem dritten Wurf trägst du das Ergebnis in den Block ein:
-  - Mit den Tasten C-F wird die aktive Blockseite gewechselt
+  - Mit den Tasten C-F kann die aktive Blockseite gewechselt werden.
   - Mit den Tasten 1-4 wird das Feld zum Eintragen ausgewählt.
-- Wenn alle Felder auf dem Kniffelblock voll sind, wird das Gesamtergebnis angezeigt.
+- Wenn alle Felder auf dem Kniffelblock voll sind, zeigt der Microtronic die Gesamtpunktzahl.
 
-Nächstes Spiel mit Taste Reset (Speicherregister müssen auch gelöscht werden).
-
-
+Fas nächste Spiel startest du mit der Reset-Taste (denn die Speicherregister müssen auch gelöscht werden).
 
 ## Kniffelblock
 
