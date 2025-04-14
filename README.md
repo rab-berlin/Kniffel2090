@@ -11,11 +11,11 @@ Die Kniffelregeln zu erklären, spare ich mir. Wer´s nicht kennt, möge einschl
 Du willst einfach nur spielen? Dann hier die Kurzfassung: 
 
 - Der erste Wurf startet automatisch.
-- Mit den Tasten 1-5 legst du die Würfel zurück in den Becher.
-- Mit Taste 0 wird der nächste Wurf gestartet.
-- Nach dem dritten Wurf wird das Ergebnis in den Block eingetragen:
--- Mit den Tasten C-F wird die aktive Blockseite gewechselt
--- Mit den Tasten 1-4 wird das Feld zum Eintragen ausgewählt.
+- Mit den Tasten 1-5 wählst du die Würfel, die zurück in den Becher sollen.
+- Mit der Taste 0 startet du den nächsten Wurf.
+- Nach dem dritten Wurf trägst du das Ergebnis in den Block ein:
+ - Mit den Tasten C-F wird die aktive Blockseite gewechselt
+ - Mit den Tasten 1-4 wird das Feld zum Eintragen ausgewählt.
 - Wenn alle Felder auf dem Kniffelblock voll sind, wird das Gesamtergebnis angezeigt.
 
 Nächstes Spiel mit Taste Reset (Speicherregister müssen auch gelöscht werden).
