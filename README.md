@@ -85,9 +85,15 @@ Intern hat der Microtronic die 30 Punkte für eine *Kleine Straße* zur Gesamtpu
 
 Bei Kniffel kommt es darauf an, mit fünf Würfeln und drei Würfen "Figuren" zu erzielen. Die beliebteste Figur ist natürlich der Kniffel selbst, also fünfmal die gleiche Augenzahl auf allen Würfeln.
 
-Der Microtronic soll nicht nur den Prozess des Würfelns unterstützen, sondern am Ende auch erkennen, welche Figuren getroffen wurden. 
+Der Microtronic soll nicht nur den Prozess des Würfelns unterstützen, sondern am Ende auch erkennen, ob und welche Figuren getroffen wurden, damit die Punkte dafür korrekt in den Block eingetragen werden.
 
-die getroffenen Figuren werden in Bitmustern gesperrt
+Die getroffenen Figuren werden als Bitmuster in den Registern FIGUR1 und FIGUR2 gespeichert. 
+
+
+Bitmuster bieten sich dafür gut an, weil eine getroffene Figur mehrere andere Figuren beinhalten kann. Wenn zum Beispiel ein Kniffel gewürfelt wurde, dann wurden gleichzeitig auch ein Drilling, ein Vierling und ein Full House getroffen, also müssen die Bits für diese Figuren ebenfalls gesetzt werden.
+
+
+Nicht zufällig entspricht die Reihenfolge der Bits in diesen Registern auch der Reihenfolge der Figuren auf dem Kniffelblock. 
 
 
 
