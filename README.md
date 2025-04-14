@@ -92,6 +92,13 @@ Die getroffenen Figuren werden als Bitmuster in den Registern FIGUR1 und FIGUR2 
 
 Bitmuster bieten sich dafür gut an, weil eine getroffene Figur mehrere andere Figuren beinhalten kann. Wenn zum Beispiel ein Kniffel gewürfelt wurde, dann wurden gleichzeitig auch ein Drilling, ein Vierling und ein Full House getroffen, also müssen die Bits für diese Figuren ebenfalls gesetzt werden.
 
+```
+              Figur 1                         Figur 2
+nicht verw.      -              Full House       x
+nicht verw.      -              Kl. Straße       -  
+Drilling         x              Gr. Straße       -
+Vierling         x              Kniffel          x
+```
 
 Nicht zufällig entspricht die Reihenfolge der Bits in diesen Registern auch der Reihenfolge der Figuren auf dem Kniffelblock. 
 
