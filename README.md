@@ -2,8 +2,6 @@
 
 Kniffel auf dem Busch Microtronic 2090
 
-Doku wird noch ergänzt... Wer´s trotzdem schon testen mag, nur zu! :)
-
 Die Kniffelregeln zu erklären, spare ich mir. Wer´s nicht kennt, möge einschlägig nachsehen... 
 
 ## tl;dr
