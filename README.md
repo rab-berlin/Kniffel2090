@@ -250,8 +250,8 @@ Dreier         ADDI #4,FIGUR1
                BRC Auswahl
                CMP W5,W4
                BRC Auswahl
-               CMP W1,W5             neu für Full-House-Leugner
-               BRZ Auswahl           neu für Full-House-Leugner
+               CMP W1,W5             (für Full-House-Leugner)
+               BRZ Auswahl           (für Full-House-Leugner)
 FullHouse      ADDI #1,FIGUR2
 ```
 
