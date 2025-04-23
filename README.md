@@ -13,9 +13,9 @@ Du willst einfach nur spielen? Dann hier die Kurzfassung:
 - Der erste Wurf startet automatisch.
 - Mit den Tasten 1-5 wählst du die Würfel, die zurück in den Becher sollen.
 - Mit der Taste 0 startet du den nächsten Wurf.
-- Nach dem dritten Wurf trägst du das Ergebnis in den Block ein:
+- Nach jedem Wurf kannst du, spätestens aber nach dem dritten Wurf musst du das Ergebnis in den Block eintragen:
   - Mit den Tasten C-F kann die aktive Blockseite gewechselt werden.
-  - Mit den Tasten 1-4 wird das Feld zum Eintragen ausgewählt.
+  - Mit den Tasten 8-B wird das Feld zum Eintragen ausgewählt.
 - Wenn alle Felder auf dem Kniffelblock voll sind, zeigt der Microtronic die Gesamtpunktzahl.
 
 Fas nächste Spiel startest du mit der Reset-Taste (denn die Speicherregister müssen auch gelöscht werden).
@@ -88,9 +88,9 @@ Also sind *Full House* und *Große Straße* schon eingetragen (oder gestrichen),
 
 Einen *Kniffel* haben wir nicht getroffen, eine *Große Straße* können wir nicht mehr eintragen, allerdings wissen Kniffel-Profis: eine *Große Straße* enthält immer auch eine *Kleine Straße*.  
 
-Mit den Tasten 1-4 wird das Ergebnis des Wurfs auf der aktiven Blockseite eingetragen. Testhalber drücken wir die Taste 1 und stellen fest, dass das Display sich nicht verändert - denn das Feld für *Full House* ist im Block schon belegt, daher wird die Auswahl nicht akzeptiert.
+Mit den Tasten 8-B wird das Ergebnis des Wurfs auf der aktiven Blockseite eingetragen. Testhalber drücken wir die Taste 8 und stellen fest, dass das Display sich nicht verändert - denn das Feld für *Full House* ist im Block schon belegt, daher wird die Auswahl nicht akzeptiert.
 
-Mit der Taste 2 wählen wir schließlich die *Kleine Straße* aus. Daraufhin geht die LED an Ausgang 2 aus, der Microtronic blinkt und rechnet ein bisschen herum, und anschließend wird ein neuer Wurf gestartet. 
+Mit der Taste 9 wählen wir schließlich die *Kleine Straße* aus. Daraufhin geht die LED an Ausgang 2 aus, der Microtronic blinkt und rechnet ein bisschen herum, und anschließend wird ein neuer Wurf gestartet. 
 
 Intern hat der Microtronic die 30 Punkte für eine *Kleine Straße* zur Gesamtpunktzahl addiert - allerdings nur, wenn die geforderte Figur auch gewürfelt wurde, ansonsten würde das Feld gestrichen (also eingetragen, aber mit null Punkten).
 
