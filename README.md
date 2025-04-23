@@ -232,4 +232,30 @@ Die offiziellen Regeln sagen: ...
 
 So haben wir das aber **niemals nie nicht** gespielt. Wenn man einen weiteren Kniffel gewürfelt hatte, wurde der dort eingetragen, wo es noch reinpasste. Wenn er nicht mwehr unterzubringen war, griff die berühmte _"Schade, schade, leider Pech gehabt"-Regel_. 
 
+## Kniffel ist (auch) ein Full House!
+
+In meiner Einfalt nahm ich an, darüber müsse gar nicht diskutiert werden. 
+
+Es liegt ja auf der Hand: 5 Gleiche sind - mathematisch - auch 3 Gleiche und 2 Gleiche.
+
+Allerdings musste ich bei meinen Recherchen feststellen, dass es eine Fraktion gibt, die diese unumstößliche Tatsache einfach gänzlich anders sieht. Mit denen würde ich prinzipiell nicht mehr spielen. Vielleicht gibt es auch einen besonderen Platz in der Hölle für "Kniffel ist Full House"-Leugner. Zu meiner Zerknirschung habe ich aber auch erfahren müssen, dass das offizielle Regelwerk diesen Häretikern recht gibt. Tatsächlich muss ein Full House aus zwei unterschiedlichen Paschs bestehen. 
+
+Ich weigere mich aber, das zu programmieren, weil sich jede Faser in mir dagegen sträubt. Trotzdem ein Hinweis zur Güte - Wer Kniffelse und Full Häuser getrennt bewertet wissen will, möge an dieser Stelle eine kleine Anpassung vornehmen:
+
+```
+Kniffel        ADDI #8,FIGUR2
+Vierer         MOVI #8,FIGUR1
+Dreier         ADDI #4,FIGUR1
+	             CMP W2,W1
+               BRC Auswahl
+               CMP W5,W4
+	             BRC Auswahl
+               CMP W1,W5             neu für Full-House-Leugner
+               BRZ Auswahl           neu für Full-House-Leugner
+FullHouse	     ADDI #1,FIGUR2
+```
+
+Wenn erster und fünfter Würfel gleich sind, dann wird mit dieser Änderung kein Full House gewertet. Verwendung auf eigene Gefahr.
+
+
 
