@@ -220,5 +220,16 @@ Und hab's einfach mal riskiert. What can possibly go wrong?
 
 ...
 
+# Was fehlt oder anders ist...
+
+## Bonuspunkte für weitere Kniffel
+
+...
+
+## Kniffel als Joker
+
+Die offiziellen Regeln sagen: ...
+
+So haben wir das aber **niemals nie nicht** gespielt. Wenn man einen weiteren Kniffel gewürfelt hatte, wurde der dort eingetragen, wo es noch reinpasste. Wenn er nicht mwehr unterzubringen war, griff die berühmte _"Schade, schade, leider Pech gehabt"-Regel_. 
 
 
