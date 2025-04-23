@@ -246,13 +246,13 @@ Ich weigere mich aber, das zu programmieren, weil sich jede Faser in mir dagegen
 Kniffel        ADDI #8,FIGUR2
 Vierer         MOVI #8,FIGUR1
 Dreier         ADDI #4,FIGUR1
-	             CMP W2,W1
+               CMP W2,W1
                BRC Auswahl
                CMP W5,W4
-	             BRC Auswahl
+               BRC Auswahl
                CMP W1,W5             neu für Full-House-Leugner
                BRZ Auswahl           neu für Full-House-Leugner
-FullHouse	     ADDI #1,FIGUR2
+FullHouse      ADDI #1,FIGUR2
 ```
 
 Wenn erster und fünfter Würfel gleich sind, dann wird mit dieser Änderung kein Full House gewertet. Verwendung auf eigene Gefahr.
