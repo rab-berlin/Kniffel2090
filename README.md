@@ -11,14 +11,14 @@ Die Kniffelregeln zu erklären, spare ich mir. Wer´s nicht kennt, möge einschl
 Du willst einfach nur spielen? Dann hier die Kurzfassung: 
 
 - Der erste Wurf startet automatisch.
-- Mit den Tasten 1-5 wählst du die Würfel, die zurück in den Becher sollen.
-- Mit der Taste 0 startet du den nächsten Wurf.
+- Mit den **Tasten 1-5** wählst du die Würfel, die **zurück in den Becher** sollen.
+- Mit der **Taste 0** startet du den **nächsten Wurf**.
 - Nach jedem Wurf kannst du, spätestens aber nach dem dritten Wurf musst du das Ergebnis in den Block eintragen:
-  - Mit den Tasten C-F kann die aktive Blockseite gewechselt werden.
-  - Mit den Tasten 8-B wird das Feld zum Eintragen ausgewählt.
+  - Mit den **Tasten C-F** kann die **aktive Blockseite gewechselt** werden.
+  - Mit den **Tasten 8-B** wird das **Feld zum Eintragen** ausgewählt.
 - Wenn alle Felder auf dem Kniffelblock voll sind, zeigt der Microtronic die Gesamtpunktzahl.
 
-Fas nächste Spiel startest du mit der Reset-Taste (denn die Speicherregister müssen auch gelöscht werden).
+Das nächste Spiel startest du mit der Reset-Taste (denn die Speicherregister müssen auch gelöscht werden).
 
 ## Kniffelblock
 
