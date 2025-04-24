@@ -21,7 +21,6 @@ Das nächste Spiel startest du mit der Reset-Taste (denn die Speicherregister m�
 ## Kniffelblock
 
 Der Kniffelblock wird durch die LEDs an den Ausgängen und den jeweiligen Buchstaben im Display repräsentiert. 
-
 ```
 
 Kniffelblock       LED an Ausgang        Blockseite
