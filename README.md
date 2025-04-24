@@ -21,8 +21,8 @@ Das nächste Spiel startest du mit der Reset-Taste (denn die Speicherregister m�
 ## Kniffelblock
 
 Der Kniffelblock wird durch die LEDs an den Ausgängen und den jeweiligen Buchstaben im Display repräsentiert. 
-```
 
+```
 Kniffelblock       LED an Ausgang        Blockseite
 
 1er                      1                    C
@@ -218,6 +218,16 @@ Damals weder angezweifelt noch je wissentlich übertreten, sehe ich diese Gebote
 Und hab's einfach mal riskiert. What can possibly go wrong? 
 
 ...
+
+- von-Neumann vs. Harvard
+- keine (indirekte) Adressierung des Speichers
+- daher kostenintensiv, wenn mehrere Register addiert werden, denn kein inkrementierter Index über die Speicheradressen möglich (kein "Array")
+- entweder hartcodiert alle Register addieren -> viele ADD-Befehle
+- oder Register in best. Register schieben und immer diese Register addieren -> viele MOV-Befehle
+- für Sortierung der Würfel werden bereits Register geMOVt in WL und WH
+- diese Routine wird erweitert um die Addition der Augen (Gesamtsumme)
+- für Augensumme einzelner Würfel (1-6) wird der Programmteil zum Pseudo-Sub gemacht - Rücksprung nur, we
+
 
 # Was fehlt oder anders ist...
 
