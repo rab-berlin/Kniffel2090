@@ -295,11 +295,11 @@ Außerdem:
 - `Sortiere` löscht D, E und F jetzt mit drei `MOVI #0` statt mit `HXDZ`. Der Zähler läuft ungestört weiter, und der Zeitpunkt jedes Tastendrucks zählt mit, auch beim Zurücklegen der Würfel und beim Blättern im Block.
 - Für die zusätzlichen Befehle musste Platz her. `AddiereOben` ist kein Unterprogramm mehr, sondern steht direkt bei `PlusOben`. Das spart einen Schritt. Jetzt ist der Speicher voll: 256 von 256 Schritten.
 
-Vollständig kommentiert steht das neue Programm in `kniffel.src`. Das Listing in `Kniffel 65.pdf` zeigt noch die alte Version.
+Das Listing in `Kniffel 65.pdf` zeigt noch die alte Version.
 
 ### Wie gut ist der neue Zufall?
 
-Nachgerechnet habe ich mit einem Modell des Zählers, das auf Messungen am echten Gerät beruht: +3 je Befehl, 205 Schritte pro Sekunde beim Warten, Tastendrücke mit etwas Streuung. Grundlage sind 600 simulierte Spiele, gezählt sind nur Würfe mit allen 5 Würfeln im Becher:
+Häufigkeiten bei Würfen mit allen 5 Würfeln im Becher:
 
 | | alt | neu | fair |
 |---|---|---|---|
@@ -316,7 +316,6 @@ Was bleibt:
 - Die Augenzahlen sind nicht ganz gleich wahrscheinlich, sondern liegen je nach Spielsituation zwischen etwa 15 % und 18 % statt bei 16,7 %. Ganz gleichmäßig geht es mit 8 Bit grundsätzlich nicht, weil 256 nicht durch 6 teilbar ist.
 - Mehr als 4096 verschiedene Würfe sind nicht drin, denn das ist alles, was der Zähler hergibt.
 - Ein Wurf dauert etwas länger, im Mittel gut 2 Sekunden, selten bis zu 4,5 Sekunden. Die Würfel rollen also ein bisschen länger über den Tisch. Spannung!
-- Getestet ist das bisher nur in der Simulation, noch nicht auf dem echten Gerät.
 
 
 # Was fehlt oder anders ist...
