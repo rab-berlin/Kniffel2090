@@ -204,29 +204,56 @@ Goldkörnchen zum Mitschreiben: Alle Schwellenwerte, die sich über mehrere Regi
 
 Keine Ahnung, ob es sowas gibt. Falls nicht, hab ich's gerade erfunden...
 
-Bestimmte Programmabschnitte lösen ähnliche Aufgaben, dann ist es sinnvoll, zu überlegen, ob diese Abschnitte in ein Unterprogramm ausgelagert werden können. Beim Microtronic stellen sich dann allerdings zwei potentielle Probleme: 
+Wenn mehrere Programmabschnitte ähnliche Aufgaben lösen, liegt ein Unterprogramm nahe. Beim Microtronic gibt es dabei aber zwei Haken:
 
-- Unterprogramme dürfen keine weiteren Unterprogramme aufrufen
-- ein RETURN ohne vorheriges CALL ist unzulässig
+- Ein Unterprogramm darf kein weiteres Unterprogramm aufrufen.
+- Ein `RET` ohne vorheriges `CALL` ist unzulässig.
 
 Im Anleitungsbuch 1. Teil, S. 74 heißt es dazu: **Wichtig: In einem Unterprogramm darf kein CALL-Befehl vorhanden sein, weil sonst eine "Endlosschleife" entsteht.**
 
-Dieser Warnhinweis schien mir ausreichend bedrohlich - wer will schon gefangen sein in einer *Endlosschleife*?! 😱 Womöglich stürzte ich das Universum ins Nichts nur durch einen unbedachten CALL? Zu viel Verantwortung für die schmalen Schultern eines jugendlichen Programmierschülers. 
+Dieser Warnhinweis schien mir ausreichend bedrohlich – wer will schon gefangen sein in einer *Endlosschleife*?! 😱 Womöglich stürzte ich das Universum ins Nichts nur durch einen unbedachten CALL? Zu viel Verantwortung für die schmalen Schultern eines jugendlichen Programmierschülers.
 
-Damals weder angezweifelt noch je wissentlich übertreten, sehe ich diese Gebote heutzutage - nach vielen undeklarierten Variablen, verbogenen Pointern und übergelaufenen Arrays - einen Tick gelassener...
+Damals weder angezweifelt noch je wissentlich übertreten, sehe ich diese Gebote heutzutage – nach vielen undeklarierten Variablen, verbogenen Pointern und übergelaufenen Arrays – einen Tick gelassener. Der Grund ist ganz einfach: Der Microtronic merkt sich genau **eine** Rücksprungadresse. Ein zweites `CALL` überschreibt sie, und das äußere `RET` springt danach zurück ins innere Unterprogramm statt zum Aufrufer.
 
-Und hab's einfach mal riskiert. What can possibly go wrong? 
+### Das Problem: Augen zählen
 
-...
+Für die obere Hälfte des Blocks braucht der Microtronic die Augensumme einer bestimmten Zahl, also alle Einser, alle Zweier und so weiter. Für Dreierpasch, Viererpasch und Chance braucht er die Summe aller Augen.
 
-- von-Neumann vs. Harvard
-- keine (indirekte) Adressierung des Speichers
-- daher kostenintensiv, wenn mehrere Register addiert werden, denn kein inkrementierter Index über die Speicheradressen möglich (kein "Array")
-- entweder hartcodiert alle Register addieren -> viele ADD-Befehle
-- oder Register in best. Register schieben und immer diese Register addieren -> viele MOV-Befehle
-- für Sortierung der Würfel werden bereits Register geMOVt in WL und WH
-- diese Routine wird erweitert um die Addition der Augen (Gesamtsumme)
-- für Augensumme einzelner Würfel (1-6) wird der Programmteil zum Pseudo-Sub gemacht - Rücksprung nur, we
+Eine Schleife über die fünf Würfel gibt es dafür nicht. Programm- und Registerspeicher sind getrennt, und ein Register lässt sich nur über seine feste Nummer im Befehl ansprechen. Es gibt keinen Index, der von Würfel zu Würfel weiterzählt, also kein „Array“. Bleiben zwei teure Wege:
+
+- jeden Würfel einzeln hart codiert prüfen und addieren, das kostet viele `ADD`- und Vergleichsbefehle,
+- oder jeden Würfel nacheinander in ein festes Register schieben und immer dieses eine Register auswerten, das kostet viele `MOV`-Befehle.
+
+### Die Lösung: das Sortieren rechnet mit
+
+Genau dieses Schieben passiert aber ohnehin schon: Der Bubblesort holt jeden Würfel nacheinander in die Vergleichsregister WL und WH. Also rechnet die Sortierroutine gleich mit. Jeder Würfel, der durch WL läuft, wird zur Summe addiert:
+
+- `EINGABE` = 0: alle Augen zählen (Gesamtsumme für Pasch und Chance).
+- `EINGABE` = 1 bis 6: nur die Würfel mit genau dieser Augenzahl zählen.
+
+```
+TauscheNicht   CMPI #0,EINGABE      alle Augen zählen?
+               BRZ Dazu
+               CMP WL,EINGABE       oder nur diese Augenzahl?
+               BRZ Dazu
+               GOTO NichtDazu
+Dazu           ADD WL,SUMME1        Summe bilden
+               ADC SUMME2
+NichtDazu      ...
+```
+
+Die Sortierroutine ruft selbst das Unterprogramm `Sort_WH_WL` auf. Ein `CALL Sortiere` ist deshalb verboten, siehe oben. Also wird sie für die Augensumme mit `GOTO` angesprungen. Für den „Rücksprung“ sorgt eine Bedingung am Ende des ersten Durchlaufs:
+
+```
+Return?        CMPI #0,EINGABE      Augensumme 1-6 gefragt?
+               BRC PlusOben         ja: "Rücksprung" zum Eintragen
+               SUBI #F,Z2           nein: normal weitersortieren
+               BRC Sortiere
+```
+
+Steht in `EINGABE` eine Zahl von 1 bis 6, verlässt das Programm die Sortierroutine schon nach dem ersten Durchlauf mit der fertigen Summe. Die Würfel sind zu diesem Zeitpunkt längst sortiert. Steht dort eine 0, läuft der normale Ablauf nach dem Wurf weiter: alle fünf Durchläufe, Figuren erkennen, Gesamtsumme bilden.
+
+Das ist ein Unterprogramm ohne `CALL` und ohne `RET`, mit einem Rücksprung, der vom Inhalt eines Registers abhängt. Ein **bedingtes Unterprogramm** eben. Das Universum existiert übrigens noch.
 
 
 ## Zufall vom Zähler
