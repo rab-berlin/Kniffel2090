@@ -229,6 +229,95 @@ Und hab's einfach mal riskiert. What can possibly go wrong?
 - für Augensumme einzelner Würfel (1-6) wird der Programmteil zum Pseudo-Sub gemacht - Rücksprung nur, we
 
 
+## Zufall vom Zähler
+
+Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dagegen würfelte der Becher ziemlich merkwürdig: Kniffel am laufenden Band, aber nie eine Straße. Der Grund: `RND` ist auf dem 2090 gar kein Zufallsgenerator, sondern liest einen Zähler.
+
+- Der Zähler hat 12 Bit und landet in den Registern D (unten), E und F (oben).
+- Jeder ausgeführte Befehl zählt +3, egal welcher.
+- Solange der Microtronic auf eine Taste wartet (`KIN`), zählt er mit etwa 205 Schritten pro Sekunde weiter.
+- `RESET` setzt ihn auf 000, und einige Befehle benutzen ihn als Zwischenspeicher und setzen ihn auf einen festen Wert, zum Beispiel `HXDZ`.
+
+Zufällig ist also nur der Zeitpunkt des Tastendrucks. Alles danach lässt sich vorausberechnen.
+
+### Was in der alten Version (65) passierte
+
+Die alte Würfelroutine:
+
+```
+Würfel   CMPI #0,AUGEN
+         BRC Zurück
+Zufall   RND
+         CMPI #5,AUGEN        nur D (unterstes Nibble) wird geprüft
+         BRC Zufall           3 Befehle je Runde = +9
+         ADDI #1,AUGEN
+Zurück   RET
+```
+
+Damit hängt ein Würfel nur vom untersten Nibble ab, also von 16 Möglichkeiten. Zwischen dem angenommenen `RND` und dem `RND` für den nächsten Würfel liegen immer genau 10 Befehle, also +30 Schritte. Das unterste Nibble wird dadurch um 2 kleiner, und aus einer 1 wird wieder eine 1, aus einer 2 wieder eine 2. So gab es auf dem echten Gerät genau 6 verschiedene Würfe:
+
+| Zähler-Nibble beim 1. RND | Wurf |
+|---|---|
+| 0, 7, E | 1 1 1 1 1 |
+| 1, 6, 8, D, F | 2 2 2 2 2 |
+| 2, 9 | 1 1 1 1 3 |
+| 3, A | 2 2 2 2 4 |
+| 4, B | 1 1 1 3 5 |
+| 5, C | 2 2 2 4 6 |
+
+Die Hälfte aller Würfe war ein Kniffel. Eine Straße war unmöglich.
+
+Dazu kam ein zweites Problem: `Sortiere` löscht D, E und F mit `MOVI #F,GLEICH1` und `HXDZ`. Das ist ein hübscher Trick (Eingabe über 3E7, also wird alles 0), aber `HXDZ` setzt dabei auch den Zähler auf einen festen Wert. Nach einem Eintrag oben (1er bis 6er) läuft das Programm ohne Tastendruck bis zum nächsten Wurf, der damit schon feststand.
+
+### Die neue Würfelroutine
+
+```
+Würfel   CMPI #0,AUGEN        Würfel im Becher?
+         BRC Zurück
+         RND                  D, E, F = Zählerstand
+         ADD rE,WL            mittleres und oberes Nibble in den Akku WL
+         ADD rF,WL            (WL wird erst beim Sortieren gebraucht)
+Zufall   ADDI #D,WL           x = 17 x + D, x = AUGEN:WL (8 Bit)
+         ADC AUGEN
+         ADD WL,AUGEN
+         CMPI #5,AUGEN        0-5 annehmen, sonst nächster Schritt
+         BRC Zufall
+         ADDI #1,AUGEN        Augen 1-6
+Zurück   RET
+```
+
+- Alle drei Nibbles des Zählers fließen ein, nicht nur das unterste.
+- Abgelehnte Werte laufen nicht mehr über den Zähler, sondern über einen kleinen Zufallsgenerator. Der rechnet mit 8 Bit und ist mit 3 Befehlen billig: Mal 17 heißt auf einem 4-Bit-Rechner einfach „unteres Nibble auf das obere addieren“.
+- WL sammelt über alle fünf Würfel eines Wurfs. Dadurch hängen die Würfel kaum noch voneinander ab.
+
+Außerdem:
+
+- `Sortiere` löscht D, E und F jetzt mit drei `MOVI #0` statt mit `HXDZ`. Der Zähler läuft ungestört weiter, und der Zeitpunkt jedes Tastendrucks zählt mit, auch beim Zurücklegen der Würfel und beim Blättern im Block.
+- Für die zusätzlichen Befehle musste Platz her. `AddiereOben` ist kein Unterprogramm mehr, sondern steht direkt bei `PlusOben`. Das spart einen Schritt. Jetzt ist der Speicher voll: 256 von 256 Schritten.
+
+Das Listing in `Kniffel 65.pdf` zeigt noch die alte Version.
+
+### Wie gut ist der neue Zufall?
+
+Häufigkeiten bei Würfen mit allen 5 Würfeln im Becher:
+
+| | alt | neu | fair |
+|---|---|---|---|
+| verschiedene Würfe | 6 | rund 2000 | 7776 |
+| Kniffel | 53 % | 0,09 % | 0,08 % |
+| Vierling | 75 % | 2,2 % | 2,0 % |
+| Drilling | 100 % | 21,0 % | 21,3 % |
+| Full House | 50 % | 3,9 % | 3,9 % |
+| Große Straße | 0 % | 3,3 % | 3,1 % |
+| Kleine Straße | 0 % | 15,6 % | 15,4 % |
+
+Was bleibt:
+
+- Die Augenzahlen sind nicht ganz gleich wahrscheinlich, sondern liegen je nach Spielsituation zwischen etwa 15 % und 18 % statt bei 16,7 %. Ganz gleichmäßig geht es mit 8 Bit grundsätzlich nicht, weil 256 nicht durch 6 teilbar ist.
+- Mehr als 4096 verschiedene Würfe sind nicht drin, denn das ist alles, was der Zähler hergibt.
+- Ein Wurf dauert etwas länger, im Mittel gut 2 Sekunden, selten bis zu 4,5 Sekunden. Die Würfel rollen also ein bisschen länger über den Tisch. Spannung!
+
+
 # Was fehlt oder anders ist...
 
 ## Bonuspunkte für weitere Kniffel
