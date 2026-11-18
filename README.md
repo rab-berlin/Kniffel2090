@@ -365,13 +365,26 @@ Was bleibt:
 
 ## Bonuspunkte für weitere Kniffel
 
-...
+Laut der Spielanleitung von Schmidt Spiele bringt jeder zweite und weitere Kniffel 50 Zusatzpunkte. Sie werden auf der Rückseite des Blocks notiert. Beim amerikanischen Yahtzee sind es sogar 100 Punkte.
+
+Der Microtronic kennt diese Regel nicht: Ein weiterer Kniffel bringt nur die Punkte des Feldes, in das er eingetragen wird.
 
 ## Kniffel als Joker
 
-Die offiziellen Regeln sagen: ...
+Die offiziellen Regeln sagen: Zusätzlich zu den 50 Punkten darf ein weiterer Kniffel als Joker in ein beliebiges freies Feld, und zwar mit der Höchstpunktzahl dieses Feldes:
 
-So haben wir das aber **niemals nie nicht** gespielt. Wenn man einen weiteren Kniffel gewürfelt hatte, wurde der dort eingetragen, wo es noch reinpasste. Wenn er nicht mwehr unterzubringen war, griff die berühmte _"Schade, schade, leider Pech gehabt"-Regel_. 
+- **oben:** in jedes freie Zahlenfeld. Fünf Vieren ergeben zum Beispiel 25 Punkte im Fünfer-Feld.
+- **unten:** in jedes freie Feld. Es gibt zum Beispiel 30 Punkte für die Kleine Straße oder 40 Punkte für die Große Straße.
+
+Ältere Ausgaben waren strenger. Dort musste ein weiterer Kniffel zuerst ins passende Zahlenfeld oben, dann gab es auch die 50 Zusatzpunkte. Als Joker unten war er erst erlaubt, wenn sowohl das Kniffelfeld als auch dieses Zahlenfeld schon belegt waren. War auch unten nichts mehr frei, wurde oben ein Feld gestrichen.
+
+So haben wir das aber **niemals nie nicht** gespielt. Wenn man einen weiteren Kniffel gewürfelt hatte, wurde der dort eingetragen, wo es noch reinpasste. Wenn er nicht mehr unterzubringen war, griff die berühmte _"Schade, schade, leider Pech gehabt"-Regel_.
+
+Genau so rechnet auch Kniffel2090:
+
+- Ein Kniffel gilt zugleich als Dreierpasch, Viererpasch und Full House. Dort zählt er seine Augensumme beziehungsweise 25 Punkte.
+- Oben zählt er nur im Feld seiner eigenen Augenzahl.
+- Für die Straßen taugt er nicht. Wer ihn dort einträgt, streicht das Feld.
 
 ## Kniffel ist (auch) ein Full House!
 
