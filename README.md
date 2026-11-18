@@ -281,9 +281,24 @@ Zufall   RND
 Zurück   RET
 ```
 
-Damit hängt ein Würfel nur von einem Register ab, also von 16 Möglichkeiten. Zwischen dem angenommenen `RND` und dem `RND` für den nächsten Würfel liegen immer genau 10 Befehle, also +30 Schritte. Der Wert in Register D wird dadurch um 2 kleiner, und aus einer 1 wird wieder eine 1, aus einer 2 wieder eine 2. So gab es auf dem echten Gerät genau 6 verschiedene Würfe:
+Die Routine schaut nur auf Register D, also die letzte Stelle des Zählers (0 bis F). Ist D 0 bis 5, wird D + 1 der Würfel, sonst liest sie den Zähler neu ab. Weil der Zähler stur weiterzählt, gelten für D zwei feste Regeln:
 
-| Zähler-Nibble beim 1. RND | Wurf |
+- **Neuer Versuch:** 3 Befehle, also +9 (nach F geht es bei 0 weiter).
+- **Nächster Würfel:** Zwischen dem angenommenen `RND` und dem `RND` für den nächsten Würfel liegen 10 Befehle, also +30. Für D heißt das: −2.
+
+Zufällig ist nur D beim allerersten `RND` des Wurfs. Ein Beispiel mit D = 4 (gewürfelt wird von W5 nach W1):
+
+| Würfel | D | Ergebnis |
+|---|---|---|
+| W5 | 4 | 5 |
+| W4 | 4 − 2 = 2 | 3 |
+| W3 | 2 − 2 = 0 | 1 |
+| W2 | 0 − 2 = E, +9 → 7, +9 → 0 | 1 |
+| W1 | wieder E → 7 → 0 | 1 |
+
+Angezeigt wird 1 1 1 3 5. Sobald eine 1 oder 2 fällt, dreht sich D im Kreis: Nach einer 1 landet D immer auf E, die Schleife läuft E → 7 → 0, und das ist wieder eine 1. Nach einer 2 läuft sie F → 8 → 1, und das ist wieder eine 2. Aus den 16 möglichen Startwerten werden so genau 6 Würfe:
+
+| D beim 1. RND | Wurf |
 |---|---|
 | 0, 7, E | 1 1 1 1 1 |
 | 1, 6, 8, D, F | 2 2 2 2 2 |
@@ -293,6 +308,8 @@ Damit hängt ein Würfel nur von einem Register ab, also von 16 Möglichkeiten. 
 | 5, C | 2 2 2 4 6 |
 
 Die Hälfte aller Würfe war ein Kniffel. Eine Straße war unmöglich.
+
+Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Würfel angenommen wird, steht in D immer genau sein Wert minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 11 Befehlen wäre jeder Wurf eine große Straße, bei 13 jeder ein Kniffel. Helfen kann nur etwas, das beim Annehmen nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
 
 Dazu kam ein zweites Problem: `Sortiere` löscht D, E und F mit `MOVI #F,GLEICH1` und `HXDZ`. Ich fand das elegant und nützlich, weil es einen Befehl spart (Wert über 3E7, und schon wird alles 0), aber `HXDZ` setzt dabei auch den "Zufallszähler" auf einen festen Wert - weil der TMS1600 sich die Freiheit nimmt, die internen Register des Zählers für seine Konvertierungsberechnungen zu benutzen. 
 
