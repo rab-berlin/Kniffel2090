@@ -284,7 +284,26 @@ Zurück   RET
 Die Routine schaut nur auf Register D, also die letzte Stelle des Zählers (0 bis F). Ist D 0 bis 5, wird D + 1 der Würfel, sonst liest sie den Zähler neu ab. Weil der Zähler stur weiterzählt, gelten für D zwei feste Regeln:
 
 - **Neuer Versuch:** 3 Befehle, also +9 (nach F geht es bei 0 weiter).
-- **Nächster Würfel:** Zwischen dem angenommenen `RND` und dem `RND` für den nächsten Würfel liegen 10 Befehle, also +30. Für D heißt das: −2.
+- **Nächster Würfel:** Zwischen dem gültigen `RND` und dem `RND` für den nächsten Würfel liegen 10 Befehle, also +30. Für D heißt das: −2.
+
+Schon ein einzelner Würfel ist dabei nicht gerecht, selbst wenn D beim ersten `RND` völlig zufällig ist. Ein ungültiger Wert bringt keinen neuen Zufall, denn der nächste Versuch liegt immer genau 9 höher. D läuft also immer dieselbe Runde ab:
+
+```
+0 → 9 → 2 → B → 4 → D → 6 → F → 8 → 1 → A → 3 → C → 5 → E → 7 → (0)
+```
+
+Gültig sind nur 0 bis 5. Jeder gültige Wert bekommt alle ungültigen Werte, die in der Runde direkt vor ihm liegen:
+
+| Augen | D | erreicht von Startwert D | Wahrscheinlichkeit |
+|---|---|---|---|
+| 1 | 0 | 0, 7, E | 3/16 = 19 % |
+| 2 | 1 | 1, 6, 8, D, F | 5/16 = 31 % |
+| 3 | 2 | 2, 9 | 2/16 = 12,5 % |
+| 4 | 3 | 3, A | 2/16 = 12,5 % |
+| 5 | 4 | 4, B | 2/16 = 12,5 % |
+| 6 | 5 | 5, C | 2/16 = 12,5 % |
+
+Die 2 kommt zweieinhalbmal so oft wie die 6. Im Emulator mit echtem Zufall ist dieselbe Routine gerecht, weil dort jeder neue Versuch einen frischen Wert liefert. Ein anderer Schleifenabstand hilft auf dem Gerät nicht: 16 Werte lassen sich nicht in sechs gleiche Teile teilen.
 
 Zufällig ist nur D beim allerersten `RND` des Wurfs. Ein Beispiel mit D = 4 (gewürfelt wird von W5 nach W1):
 
@@ -309,7 +328,7 @@ Angezeigt wird 1 1 1 3 5. Sobald eine 1 oder 2 fällt, dreht sich D im Kreis: Na
 
 Die Hälfte aller Würfe war ein Kniffel. Eine Straße war unmöglich.
 
-Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Würfel angenommen wird, steht in D immer genau sein Wert minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 11 Befehlen wäre jeder Wurf eine große Straße, bei 13 jeder ein Kniffel. Helfen kann nur etwas, das beim Annehmen nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
+Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Wert akzeptiert wird, steht in D immer genau sein Wert minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 11 Befehlen wäre jeder Wurf eine große Straße, bei 13 jeder ein Kniffel. Helfen kann nur etwas, das beim Akzeptieren nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
 
 Dazu kam ein zweites Problem: `Sortiere` löscht D, E und F mit `MOVI #F,GLEICH1` und `HXDZ`. Ich fand das elegant und nützlich, weil es einen Befehl spart (Wert über 3E7, und schon wird alles 0), aber `HXDZ` setzt dabei auch den "Zufallszähler" auf einen festen Wert - weil der TMS1600 sich die Freiheit nimmt, die internen Register des Zählers für seine Konvertierungsberechnungen zu benutzen. 
 
@@ -326,7 +345,7 @@ Würfel   CMPI #0,AUGEN        Würfel im Becher?
 Zufall   ADDI #D,WL           x = 17 x + D, x = AUGEN:WL (8 Bit)
          ADC AUGEN
          ADD WL,AUGEN
-         CMPI #5,AUGEN        0-5 annehmen, sonst nächster Schritt
+         CMPI #5,AUGEN        0-5 gültig, sonst nächster Schritt
          BRC Zufall
          ADDI #1,AUGEN        Augen 1-6
 Zurück   RET
