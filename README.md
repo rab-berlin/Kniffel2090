@@ -309,6 +309,10 @@ Die 2 kommt zweieinhalbmal so oft wie die 6. Wo bleibt da die Gerechtigkeit, fra
 
 Im Emulator mit echtem Zufall ist dieselbe Routine gerecht, weil dort jeder neue Versuch einen frischen Wert liefert. Ein anderer Schleifenabstand hilft auf dem Gerät nicht: 16 Werte lassen sich nicht in sechs gleiche Teile teilen.
 
+#### Es kommt noch schlimmer
+
+Ein einzelner Würfel ist also schon nicht gerecht. Beim ganzen Wurf kommt es aber noch schlimmer, weil die fünf Würfel nicht unabhängig voneinander sind. Der nächste Würfel startet nicht bei einem neuen, zufälligen Zählerstand, sondern immer genau 10 Befehle nach dem letzten gültigen Wert, also bei D − 2. Damit legt der erste Würfel alle weiteren fest.
+
 Zufällig ist nur D beim allerersten `RND` des Wurfs. Ein Beispiel mit D = 4 (gewürfelt wird von W5 nach W1):
 
 | Würfel | D | Ergebnis |
