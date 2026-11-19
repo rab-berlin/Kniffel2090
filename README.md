@@ -255,9 +255,21 @@ Steht in `EINGABE` eine Zahl von 1 bis 6, verlässt das Programm die Sortierrout
 
 Das ist ein Unterprogramm ohne `CALL` und ohne `RET`, mit einem Rücksprung, der vom Inhalt eines Registers abhängt. Ein **bedingtes Unterprogramm** eben. Das Universum ist außer Gefahr.
 
-## Zählen bitte!
+## Das Problem mit dem Glück
 
-Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dagegen spuckte der Becher großzügig und verlässlich Kniffel, Vierlinge und Drillinge aus, aber nie eine Straße. Der Grund: `RND` ist auf dem 2090 gar kein echter Zufallsgenerator, sondern ein Zähler. 
+Das Glück ist eine leichte Dirne,
+Und weilt nicht gern am selben Ort;
+Sie streicht das Haar dir von der Stirne
+Und küßt dich rasch und flattert fort.
+
+Frau Unglück hat im Gegentheile
+Dich liebefest an’s Herz gedrückt;
+Sie sagt, sie habe keine Eile,
+Setzt sich zu dir an’s Bett und strickt.
+
+Heinrich Heine
+
+Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dagegen spuckte der Würfelbecher bereits im ersten Wurf großzügig Kniffel, Vierlinge und Drillinge aus, aber nie eine Straße. Der Grund: `RND` ist auf dem 2090 gar kein echter Zufallsgenerator, sondern ein Zähler. 
 
 Höchste Zeit, den Mechanismus dieses "Zufallszählers" mal genauer unter die Lupe zu nehmen. Durch Testprogramme und Versuche hab ich schließlich herausgefunden:
 
