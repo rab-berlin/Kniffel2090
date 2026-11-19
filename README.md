@@ -454,7 +454,7 @@ In meiner Einfalt nahm ich an, darüber müsse gar nicht diskutiert werden.
 
 Es liegt ja auf der Hand: 5 Gleiche sind – mathematisch – auch 3 Gleiche und 2 Gleiche.
 
-Allerdings musste ich bei meinen Recherchen feststellen, dass es eine Fraktion gibt, die diese unumstößliche Tatsache einfach gänzlich anders sieht. Mit denen würde ich prinzipiell nicht mehr spielen. Vielleicht gibt es auch einen besonderen Platz in der Hölle für "*Kniffel* ist *Full House*"-Leugner. Zu meiner Zerknirschung habe ich aber auch erfahren müssen, dass das offizielle Regelwerk diesen Häretikern recht gibt. Tatsächlich muss ein *Full House* aus zwei unterschiedlichen *Paschs* bestehen. 
+Allerdings musste ich bei meinen Recherchen feststellen, dass es eine Fraktion gibt, die diese unumstößliche Tatsache einfach gänzlich anders sieht. Mit denen würde ich prinzipiell nicht mehr spielen. Vielleicht gibt es auch einen besonderen Platz in der Hölle für "*Kniffel* ist *Full House*"-Leugner. Zu meiner Zerknirschung habe ich aber auch erfahren müssen, dass das offizielle Regelwerk diesen Häretikern recht gibt. Tatsächlich muss ein *Full House* aus zwei __unterschiedlichen__ *Paschs* bestehen. 
 
 Ich weigere mich aber, das zu programmieren, weil sich jede Faser in mir dagegen sträubt. Trotzdem ein Hinweis zur Güte – Wer *Kniffelse* und *Full Häuser* getrennt bewertet wissen will, möge an dieser Stelle eine kleine Anpassung vornehmen:
 
