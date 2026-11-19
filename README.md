@@ -294,7 +294,7 @@ Schon ein einzelner Würfel ist dabei nicht gerecht, selbst wenn D beim ersten `
 0 → 9 → 2 → B → 4 → D → 6 → F → 8 → 1 → A → 3 → C → 5 → E → 7 → (0)
 ```
 
-Gültig sind nur 0 bis 5. Jeder gültige Wert bekommt alle ungültigen Werte, die in der Runde direkt vor ihm liegen:
+Gültig sind nur die Werte 0 bis 5. Alle ungültigen Werte folgen dieser immer gleichen Abfolge und enden schließlich in einem gültigen Wert:
 
 | Augen | D | erreicht von Startwert D | Wahrscheinlichkeit |
 |---|---|---|---|
@@ -305,7 +305,9 @@ Gültig sind nur 0 bis 5. Jeder gültige Wert bekommt alle ungültigen Werte, di
 | 5 | 4 | 4, B | 2/16 = 12,5 % |
 | 6 | 5 | 5, C | 2/16 = 12,5 % |
 
-Die 2 kommt zweieinhalbmal so oft wie die 6. Im Emulator mit echtem Zufall ist dieselbe Routine gerecht, weil dort jeder neue Versuch einen frischen Wert liefert. Ein anderer Schleifenabstand hilft auf dem Gerät nicht: 16 Werte lassen sich nicht in sechs gleiche Teile teilen.
+Die 2 kommt zweieinhalbmal so oft wie die 6. Wo bleibt da die Gerechtigkeit, fragt man sich.
+
+Im Emulator mit echtem Zufall ist dieselbe Routine gerecht, weil dort jeder neue Versuch einen frischen Wert liefert. Ein anderer Schleifenabstand hilft auf dem Gerät nicht: 16 Werte lassen sich nicht in sechs gleiche Teile teilen.
 
 Zufällig ist nur D beim allerersten `RND` des Wurfs. Ein Beispiel mit D = 4 (gewürfelt wird von W5 nach W1):
 
