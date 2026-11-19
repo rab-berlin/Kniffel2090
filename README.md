@@ -340,7 +340,7 @@ Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Wert akzeptiert 
 
 Dazu kam ein zweites Problem: `Sortiere` löscht D, E und F mit `MOVI #F,GLEICH1` und `HXDZ`. Ich fand das elegant und nützlich, weil es einen Befehl spart (Wert über 3E7, und schon wird alles 0), aber `HXDZ` setzt dabei auch den "Zufallszähler" auf einen festen Wert - weil der TMS1600 sich die Freiheit nimmt, die internen Register des Zählers für seine Konvertierungsberechnungen zu benutzen. 
 
-Nach einem Eintrag oben (1er bis 6er) läuft das Programm ohne Tastendruck bis zum nächsten Wurf, der damit schon feststand.
+Nach dem Sortieren eines Wurfs schadet das nicht: Danach wartet `Auswahl` auf eine Taste, und die Wartezeit macht den Zählerstand wieder zufällig. Anders bei einem Eintrag oben (1er bis 6er). Für die Augensumme springt das Programm mit `GOTO Sortiere` zurück ins bedingte Unterprogramm und damit direkt in das `HXDZ`. Danach geht es ohne Tastendruck über `PlusOben`, `WurfEnde` und `Beginn` bis zum nächsten Wurf, der damit schon feststand. Die anderen Felder (Pasch, Full House, Straßen, Kniffel, Chance) brauchen `Sortiere` nicht noch einmal, weil die Gesamtsumme schon vorliegt. Sie sind deshalb nicht betroffen.
 
 ### Die neue Würfelroutine
 
