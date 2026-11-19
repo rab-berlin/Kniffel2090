@@ -261,9 +261,11 @@ Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dageg
 
 Höchste Zeit, den Mechanismus dieses "Zufallszählers" mal genauer unter die Lupe zu nehmen. Durch Testprogramme und Versuche hab ich schließlich herausgefunden:
 
-- Jeder ausgeführte Befehl zählt +3, egal welcher.
-- Solange der Microtronic auf eine Taste wartet (`KIN`), zählt er mit etwa 205 Schritten pro Sekunde weiter.
-- `RESET` setzt ihn auf 000, und einige Befehle benutzen ihn als Zwischenspeicher und setzen ihn auf einen festen Wert, zum Beispiel `HXDZ`.
+- Jeder ausgeführte Befehl erhöht den Zähler um +3 (wenige Ausnahmen).
+- Solange der Microtronic auf eine Taste wartet (`KIN`), zählt er mit etwa 205 Schritten pro Sekunde weiter (gemessen).
+- `RESET` setzt ihn zurück auf 000.
+-  Einige Befehle benutzen ihn als Zwischenspeicher und setzen ihn auf einen festen Wert, zum Beispiel `HXDZ`.
+-  Der Display-Modus (`DISP`, `DISOUT`) hat keinen Einfluss auf den Zähler.
 
 Zufällig ist also nur der Zeitpunkt des Tastendrucks. Alles danach lässt sich vorausberechnen.
 
