@@ -342,7 +342,7 @@ Würfel   CMPI #0,AUGEN        Würfel im Becher?
          RND                  D, E, F = Zählerstand
          ADD rE,WL            mittleres und oberes Nibble in den Akku WL
          ADD rF,WL            (WL wird erst beim Sortieren gebraucht)
-Zufall   ADDI #D,WL           x = 17 x + D, x = AUGEN:WL (8 Bit)
+Zufall   ADDI #D,WL           x = 17 (x + D), x = AUGEN:WL (8 Bit)
          ADC AUGEN
          ADD WL,AUGEN
          CMPI #5,AUGEN        0-5 gültig, sonst nächster Schritt
@@ -352,8 +352,24 @@ Zurück   RET
 ```
 
 - Alle drei Register des Zählers fließen ein, nicht nur das unterste.
-- Abgelehnte Werte laufen nicht mehr über den Zähler, sondern über einen kleinen Zufallsgenerator. Der rechnet mit 8 Bit und ist mit 3 Befehlen billig: Mal 17 heißt auf einem 4-Bit-Rechner einfach „unteres Nibble auf das obere addieren“.
+- Ungültige Werte laufen nicht mehr über den Zähler, sondern über einen kleinen Zufallsgenerator.
 - WL sammelt über alle fünf Würfel eines Wurfs. Dadurch hängen die Würfel kaum noch voneinander ab.
+
+**Der Generator.** AUGEN und WL bilden zusammen eine 8-Bit-Zahl x: AUGEN ist die obere Stelle, WL die untere (x = 16 · AUGEN + WL). Jeder Schritt rechnet x' = 17 · (x + D), modulo 256.
+
+Warum ausgerechnet 17? Weil es auf einem 4-Bit-Rechner fast nichts kostet: 17 · x = x + 16 · x, und mal 16 heißt nur „eine Stelle nach links“. Bei 8 Bit bedeutet das: die untere Stelle auf die obere addieren, also genau ein `ADD WL,AUGEN`. Jeder andere Multiplikator bräuchte Schiebebefehle über beide Stellen samt Überträgen.
+
+Gut ist die 17 auch: Ein Generator der Form x' = a · x + c läuft nur dann durch alle 256 Werte, bevor er sich wiederholt, wenn c ungerade ist und a − 1 durch 4 teilbar. Mit a = 17 und c = 17 · D = DD hex ist beides erfüllt. Ohne diese volle Runde gäbe es kleine Kreise, aus denen manche Startwerte nie zu jeder Augenzahl fänden.
+
+**Die Verteilung.** Die Routine akzeptiert einen Wert, wenn AUGEN 0 bis 5 ist. Ist er ungültig, rechnet der Generator so lange weiter, bis ein gültiger Wert kommt. Jeder der 256 möglichen Startwerte landet dabei bei genau einer Augenzahl. Die 256 Startwerte werden also in sechs Klassen aufgeteilt (eine Partition), und die Klassen sind fast gleich groß:
+
+| | Klassengrößen (Augen 1 bis 6) | von |
+|---|---|---|
+| alte Routine | 3, 5, 2, 2, 2, 2 | 16 |
+| neue Routine | 40, 43, 41, 45, 43, 44 | 256 |
+| bestmöglich | 43, 43, 43, 43, 42, 42 | 256 |
+
+Ein einzelner Würfel zeigt damit jede Augenzahl mit 15,6 % bis 17,6 % statt 16,7 %. Ganz gleich geht es nicht, weil 256 nicht durch 6 teilbar ist.
 
 Außerdem:
 
