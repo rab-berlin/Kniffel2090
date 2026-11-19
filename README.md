@@ -10,7 +10,7 @@ Du willst einfach nur spielen? Dann hier die Kurzfassung:
 
 - Der erste Wurf startet automatisch.
 - Mit den **Tasten 1-5** wählst du die Würfel, die **zurück in den Becher** sollen.
-- Mit der **Taste 0** startet du den **nächsten Wurf**.
+- Mit der **Taste 0** startest du den **nächsten Wurf**.
 - Nach jedem Wurf kannst du, spätestens aber nach dem dritten Wurf musst du das Ergebnis in den Block eintragen:
   - Mit den **Tasten C-F** kann die **aktive Blockseite gewechselt** werden.
   - Mit den **Tasten 8-B** wird das **Feld zum Eintragen** ausgewählt.
@@ -93,7 +93,7 @@ Intern hat der Microtronic die 30 Punkte für eine *Kleine Straße* zur Gesamtpu
 
 ## Figur
 
-Bei Kniffel kommt es darauf an, mit fünf Würfeln und drei Würfen "Figuren" zu erzielen. Die beliebteste Figur ist natürlich der Kniffel selbst, also fünfmal die gleiche Augenzahl auf allen Würfeln.
+Bei Kniffel kommt es darauf an, mit fünf Würfeln und drei Würfen "Figuren" zu erzielen. Die beliebteste Figur ist natürlich der *Kniffel* selbst, also fünfmal die gleiche Augenzahl auf allen Würfeln.
 
 Der Microtronic soll nicht nur den Prozess des Würfelns unterstützen, sondern am Ende auch erkennen, ob und welche Figuren getroffen wurden, damit die Punkte dafür korrekt in den Block eingetragen werden.
 
@@ -124,18 +124,18 @@ Hier kann der Microtronic endlich die geballte Rechenpower seines 500 kHz-Elektr
 
 ## Volles Haus?
 
-Das hat mir lange Kopfzerbrechen bereitet. Ich habe eine ganze Weile mit zusätzlichen Registern und Zählern experimentiert, nur um die Übersicht über die verschiedenen Paschs (Päsche? Paschas? Paschanten?) zu behalten. Das wurde nix, oder es wurde was, war aber viel zu lang.
+Das hat mir lange Kopfzerbrechen bereitet. Ich habe eine ganze Weile mit zusätzlichen Registern und Zählern experimentiert, nur um die Übersicht über die verschiedenen *Paschs* (*Päsche*? *Paschas*? *Paschanten*?) zu behalten. Das wurde nix, oder es wurde was, war aber viel zu lang.
 
-Im Prinzip ist ein *Full House* (FH) ja nichts anderes als ein *Dreier* mit Zusatzpasch. Dieser zusätzliche Pasch kann aber "vorne" oder "hinten" sein. Wenn die Würfel sortiert vorliegen, sind somit diese beiden Varianten möglich:
+Im Prinzip ist ein *Full House* (*FH*) ja nichts anderes als ein *Dreier* mit *Zusatzpasch*. Dieser zusätzliche *Pasch* kann aber "vorne" oder "hinten" sein. Wenn die Würfel sortiert vorliegen, sind somit diese beiden Varianten möglich:
 
 ```
 PP DDD     (P - Pasch, D - Dreier)
 DDD PP
 ```
 
-Nehmen wir nun an, wir wüssten bereits, dass im Wurf ein *Dreier* vorliegt. Wie erkennen wir jetzt am einfachsten, ob auch ein FH vorliegt?
+Nehmen wir nun an, wir wüssten bereits, dass im Wurf ein *Dreier* vorliegt. Wie erkennen wir jetzt am einfachsten, ob auch ein *FH* vorliegt?
 
-Letztlich dann doch trivial. Der erste und zweite Würfel sowie der vierte und fünfte Würfel müssen gleich sein - dann ist der gesamte Wurf ein FH.
+Letztlich dann doch trivial. Der erste und zweite Würfel sowie der vierte und fünfte Würfel müssen gleich sein - dann ist der gesamte Wurf ein *FH*.
 
 ```
 ADDI #4,FIGUR1       Dreier wurde erkannt, Bit setzen
@@ -209,13 +209,13 @@ Wenn mehrere Programmabschnitte ähnliche Aufgaben lösen, liegt ein Unterprogra
 - Ein Unterprogramm darf kein weiteres Unterprogramm aufrufen.
 - Ein `RET` ohne vorheriges `CALL` ist unzulässig.
 
-Im Anleitungsbuch 1. Teil, S. 74 heißt es dazu: **Wichtig: In einem Unterprogramm darf kein CALL-Befehl vorhanden sein, weil sonst eine "Endlosschleife" entsteht.**
+Im Anleitungsbuch 1. Teil, S. 74 heißt es dazu: **Wichtig: In einem Unterprogramm darf kein `CALL`-Befehl vorhanden sein, weil sonst eine "Endlosschleife" entsteht.**
 
-Dieser Warnhinweis schien mir ausreichend bedrohlich – wer will schon gefangen sein in einer *Endlosschleife*?! 😱 Womöglich stürzte ich das Universum ins Nichts nur durch einen unbedachten CALL? Zu viel Verantwortung für die schmalen Schultern eines jugendlichen Programmierschülers.
+Dieser Warnhinweis schien mir ausreichend bedrohlich – wer will schon gefangen sein in einer *Endlosschleife*?! 😱 Womöglich stürzte ich das Universum ins Nichts nur durch einen unbedachten `CALL`? Zu viel Verantwortung für die schmalen Schultern eines jugendlichen Programmierschülers.
 
 Damals weder angezweifelt noch je wissentlich übertreten, sehe ich diese Gebote heutzutage – nach vielen undeklarierten Variablen, verbogenen Pointern und übergelaufenen Arrays – einen Tick gelassener. 
 
-Der Grund ist ganz einfach: Der Microtronic merkt sich genau **eine** Rücksprungadresse. Ein zweites `CALL` überschreibt sie, und das äußere `RET` springt danach zurück ins innere Unterprogramm statt zum Aufrufer.
+Der Grund ist ganz einfach: Der Microtronic merkt sich genau **eine** Rücksprungadresse. Ein zweites `CALL` im Unterprogramm überschreibt sie. Das `RET` am Ende des Unterprogramms springt dann nicht zum Aufrufer zurück, sondern wieder hinter dieses zweite `CALL`, also mitten ins eigene Unterprogramm. Und das immer wieder: die versprochene Endlosschleife.
 
 ### Augen zählen
 
@@ -230,7 +230,7 @@ Eine Schleife über die fünf Würfel gibt es dafür nicht. Programm- und Regist
 
 Genau dieses Schieben passiert aber sowieso schon: Bubblesort holt jeden Würfel nacheinander in die Vergleichsregister WL und WH. Warum also nicht die Sortierroutine gleich mitrechnen lassen? Jeder Würfel, der durch WL läuft, wird zur Summe addiert:
 
-- `EINGABE` = 0: alle Augen zählen (Gesamtsumme für Pasch und Chance).
+- `EINGABE` = 0: alle Augen zählen (Gesamtsumme für *Pasch* und *Chance*).
 - `EINGABE` = 1 bis 6: nur die Würfel mit genau dieser Augenzahl zählen.
 
 ```
@@ -343,7 +343,7 @@ Zufällig ist nur D beim allerersten `RND` des Wurfs. Ein Beispiel mit D = 4 (ge
 
 Angezeigt wird 1 1 1 3 5. Sobald eine 1 oder 2 fällt, dreht sich D im Kreis: Nach einer 1 landet D immer auf E, die Schleife läuft E → 7 → 0, und das ist wieder eine 1. Nach einer 2 läuft sie F → 8 → 1, und das ist wieder eine 2. Aus den 16 möglichen Startwerten werden so genau 6 Würfe:
 
-| D beim 1. RND | Wurf |
+| D beim 1. `RND` | Wurf |
 |---|---|
 | 0, 7, E | 1 1 1 1 1 |
 | 1, 6, 8, D, F | 2 2 2 2 2 |
@@ -352,9 +352,9 @@ Angezeigt wird 1 1 1 3 5. Sobald eine 1 oder 2 fällt, dreht sich D im Kreis: Na
 | 4, B | 1 1 1 3 5 |
 | 5, C | 2 2 2 4 6 |
 
-Die Hälfte aller Würfe war ein Kniffel. Eine Straße war unmöglich.
+Die Hälfte aller Würfe war ein *Kniffel*. Eine *Straße* war unmöglich.
 
-Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Wert akzeptiert wird, steht in D immer genau sein Wert minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 11 Befehlen wäre jeder Wurf eine große Straße, bei 13 jeder ein Kniffel. Helfen kann nur etwas, das beim Akzeptieren nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
+Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Wert akzeptiert wird, steht in D immer genau die gewürfelte Augenzahl minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 11 Befehlen wäre jeder Wurf eine *Große Straße*, bei 13 jeder ein *Kniffel*. Helfen kann nur etwas, das beim Akzeptieren nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
 
 #### Aller guten Probleme sind drei...
 
@@ -455,7 +455,7 @@ In meiner Einfalt nahm ich an, darüber müsse gar nicht diskutiert werden.
 
 Es liegt ja auf der Hand: 5 Gleiche sind - mathematisch - auch 3 Gleiche und 2 Gleiche.
 
-Allerdings musste ich bei meinen Recherchen feststellen, dass es eine Fraktion gibt, die diese unumstößliche Tatsache einfach gänzlich anders sieht. Mit denen würde ich prinzipiell nicht mehr spielen. Vielleicht gibt es auch einen besonderen Platz in der Hölle für "Kniffel ist Full House"-Leugner. Zu meiner Zerknirschung habe ich aber auch erfahren müssen, dass das offizielle Regelwerk diesen Häretikern recht gibt. Tatsächlich muss ein *Full House* aus zwei unterschiedlichen Paschs bestehen. 
+Allerdings musste ich bei meinen Recherchen feststellen, dass es eine Fraktion gibt, die diese unumstößliche Tatsache einfach gänzlich anders sieht. Mit denen würde ich prinzipiell nicht mehr spielen. Vielleicht gibt es auch einen besonderen Platz in der Hölle für "*Kniffel* ist *Full House*"-Leugner. Zu meiner Zerknirschung habe ich aber auch erfahren müssen, dass das offizielle Regelwerk diesen Häretikern recht gibt. Tatsächlich muss ein *Full House* aus zwei unterschiedlichen *Paschs* bestehen. 
 
 Ich weigere mich aber, das zu programmieren, weil sich jede Faser in mir dagegen sträubt. Trotzdem ein Hinweis zur Güte - Wer *Kniffelse* und *Full Häuser* getrennt bewertet wissen will, möge an dieser Stelle eine kleine Anpassung vornehmen:
 
