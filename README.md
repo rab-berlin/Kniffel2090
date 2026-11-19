@@ -100,7 +100,7 @@ Der Microtronic soll nicht nur den Prozess des Würfelns unterstützen, sondern 
 Die getroffenen Figuren werden als Bitmuster in den Registern FIGUR1 und FIGUR2 gespeichert. 
 
 
-Bitmuster bieten sich dafür gut an, weil eine getroffene Figur mehrere andere Figuren beinhalten kann. Wenn zum Beispiel ein Kniffel gewürfelt wurde, dann wurden gleichzeitig auch ein Drilling, ein Vierling und ein Full House getroffen, also müssen die Bits für diese Figuren ebenfalls gesetzt werden.
+Bitmuster bieten sich dafür gut an, weil eine getroffene Figur mehrere andere Figuren beinhalten kann. Wenn zum Beispiel ein *Kniffel* gewürfelt wurde, dann wurden gleichzeitig auch ein *Drilling*, ein *Vierling* und ein *Full House* getroffen, also müssen die Bits für diese Figuren ebenfalls gesetzt werden.
 
 ```
               Figur 1                         Figur 2
@@ -126,14 +126,14 @@ Hier kann der Microtronic endlich die geballte Rechenpower seines 500 kHz-Elektr
 
 Das hat mir lange Kopfzerbrechen bereitet. Ich habe eine ganze Weile mit zusätzlichen Registern und Zählern experimentiert, nur um die Übersicht über die verschiedenen Paschs (Päsche? Paschas? Paschanten?) zu behalten. Das wurde nix, oder es wurde was, war aber viel zu lang.
 
-Im Prinzip ist ein Full House (FH) ja nichts anderes als ein Dreier mit Zusatzpasch. Dieser zusätzliche Pasch kann aber "vorne" oder "hinten" sein. Wenn die Würfel sortiert vorliegen, sind somit diese beiden Varianten möglich:
+Im Prinzip ist ein *Full House* (FH) ja nichts anderes als ein *Dreier* mit Zusatzpasch. Dieser zusätzliche Pasch kann aber "vorne" oder "hinten" sein. Wenn die Würfel sortiert vorliegen, sind somit diese beiden Varianten möglich:
 
 ```
 PP DDD     (P - Pasch, D - Dreier)
 DDD PP
 ```
 
-Nehmen wir nun an, wir wüssten bereits, dass im Wurf ein Dreier vorliegt. Wie erkennen wir jetzt am einfachsten, ob auch ein FH vorliegt?
+Nehmen wir nun an, wir wüssten bereits, dass im Wurf ein *Dreier* vorliegt. Wie erkennen wir jetzt am einfachsten, ob auch ein FH vorliegt?
 
 Letztlich dann doch trivial. Der erste und zweite Würfel sowie der vierte und fünfte Würfel müssen gleich sein - dann ist der gesamte Wurf ein FH.
 
@@ -213,11 +213,13 @@ Im Anleitungsbuch 1. Teil, S. 74 heißt es dazu: **Wichtig: In einem Unterprogra
 
 Dieser Warnhinweis schien mir ausreichend bedrohlich – wer will schon gefangen sein in einer *Endlosschleife*?! 😱 Womöglich stürzte ich das Universum ins Nichts nur durch einen unbedachten CALL? Zu viel Verantwortung für die schmalen Schultern eines jugendlichen Programmierschülers.
 
-Damals weder angezweifelt noch je wissentlich übertreten, sehe ich diese Gebote heutzutage – nach vielen undeklarierten Variablen, verbogenen Pointern und übergelaufenen Arrays – einen Tick gelassener. Der Grund ist ganz einfach: Der Microtronic merkt sich genau **eine** Rücksprungadresse. Ein zweites `CALL` überschreibt sie, und das äußere `RET` springt danach zurück ins innere Unterprogramm statt zum Aufrufer.
+Damals weder angezweifelt noch je wissentlich übertreten, sehe ich diese Gebote heutzutage – nach vielen undeklarierten Variablen, verbogenen Pointern und übergelaufenen Arrays – einen Tick gelassener. 
+
+Der Grund ist ganz einfach: Der Microtronic merkt sich genau **eine** Rücksprungadresse. Ein zweites `CALL` überschreibt sie, und das äußere `RET` springt danach zurück ins innere Unterprogramm statt zum Aufrufer.
 
 ### Augen zählen
 
-Für die obere Hälfte des Blocks braucht der Microtronic die Augensumme einer bestimmten Zahl, also alle Einser, alle Zweier und so weiter. Für Dreierpasch, Viererpasch und Chance braucht er die Summe aller Augen.
+Für die obere Hälfte des Blocks braucht der Microtronic die Augensumme einer bestimmten Zahl, also alle Einser, alle Zweier und so weiter. Für *Dreierpasch*, *Viererpasch* und *Chance* braucht er die Summe aller Augen.
 
 Eine Schleife über die fünf Würfel gibt es dafür nicht. Programm- und Registerspeicher sind getrennt, und ein Register lässt sich nur über seine feste Nummer im Befehl ansprechen. Es gibt keinen Index, der von Würfel zu Würfel weiterzählt, also kein „Array“. Bleiben zwei teure Wege:
 
@@ -226,7 +228,7 @@ Eine Schleife über die fünf Würfel gibt es dafür nicht. Programm- und Regist
 
 ### Die Lösung: Sortieren rechnet mit
 
-Genau dieses Schieben passiert aber ohnehin schon: Der Bubblesort holt jeden Würfel nacheinander in die Vergleichsregister WL und WH. Also rechnet die Sortierroutine gleich mit. Jeder Würfel, der durch WL läuft, wird zur Summe addiert:
+Genau dieses Schieben passiert aber sowieso schon: Bubblesort holt jeden Würfel nacheinander in die Vergleichsregister WL und WH. Warum also nicht die Sortierroutine gleich mitrechnen lassen? Jeder Würfel, der durch WL läuft, wird zur Summe addiert:
 
 - `EINGABE` = 0: alle Augen zählen (Gesamtsumme für Pasch und Chance).
 - `EINGABE` = 1 bis 6: nur die Würfel mit genau dieser Augenzahl zählen.
@@ -253,7 +255,7 @@ Return?        CMPI #0,EINGABE      Augensumme 1-6 gefragt?
 
 Steht in `EINGABE` eine Zahl von 1 bis 6, verlässt das Programm die Sortierroutine schon nach dem ersten Durchlauf mit der fertigen Summe. Die Würfel sind zu diesem Zeitpunkt längst sortiert. Steht dort eine 0, läuft der normale Ablauf nach dem Wurf weiter: alle fünf Durchläufe, Figuren erkennen, Gesamtsumme bilden.
 
-Das ist ein Unterprogramm ohne `CALL` und ohne `RET`, mit einem Rücksprung, der vom Inhalt eines Registers abhängt. Ein **bedingtes Unterprogramm** eben. Das Universum ist außer Gefahr.
+Das ist ein Unterprogramm ohne `CALL` und ohne `RET`, mit einem Rücksprung, der vom Inhalt eines Registers abhängt. Ein **bedingtes Unterprogramm** eben. Das Universum ist gerettet.
 
 ## Das Problem mit dem Glück
 
@@ -269,7 +271,7 @@ Das ist ein Unterprogramm ohne `CALL` und ohne `RET`, mit einem Rücksprung, der
 >
 > — *Heinrich Heine*
 
-Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dagegen spuckte der Würfelbecher bereits im ersten Wurf großzügig Kniffel, Vierlinge und Drillinge aus, aber nie eine Straße. Der Grund: `RND` ist auf dem 2090 gar kein echter Zufallsgenerator, sondern ein Zähler. 
+Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dagegen spuckte der Würfelbecher bereits im ersten Wurf großzügig *Kniffel*, *Vierlinge* und *Drillinge* aus, aber nie eine *Straße*. Der Grund: `RND` ist auf dem 2090 gar kein echter Zufallsgenerator, sondern ein schnöder Zähler. 
 
 Höchste Zeit, den Mechanismus dieses "Zufallszählers" mal genauer unter die Lupe zu nehmen. Durch Testprogramme und Versuche hab ich schließlich herausgefunden:
 
@@ -281,9 +283,11 @@ Höchste Zeit, den Mechanismus dieses "Zufallszählers" mal genauer unter die Lu
 
 Zufällig ist also nur der Zeitpunkt des Tastendrucks. Alles danach lässt sich vorausberechnen.
 
-### Was in der alten Version passierte
+### Würfeln nach Buch 
 
-Die alte Würfelroutine:
+Wie im Anleitungsbuch, Teil 1, ursprünglich gelernt, hatte ich zunächst einen einfachen Algorithmus zum Würfeln implementiert. Und der ging so...
+
+#### Die alte Würfelroutine
 
 ```
 Würfel   CMPI #0,AUGEN
@@ -317,11 +321,13 @@ Gültig sind nur die Werte 0 bis 5. Alle ungültigen Werte folgen dieser immer g
 | 5 | 4 | 4, B | 2/16 = 12,5 % |
 | 6 | 5 | 5, C | 2/16 = 12,5 % |
 
-Die 2 kommt zweieinhalbmal so oft wie die 6. Wo bleibt da die Gerechtigkeit, fragt man sich.
+Die 2 kommt zweieinhalbmal so oft wie die 6. Wo bleibt da die Gerechtigkeit, fragt man sich!
 
-Im Emulator mit echtem Zufall ist dieselbe Routine gerecht, weil dort jeder neue Versuch einen frischen Wert liefert. Ein anderer Schleifenabstand hilft auf dem Gerät nicht: 16 Werte lassen sich nicht in sechs gleiche Teile teilen.
+Im Emulator mit echtem Zufall ist dieselbe Routine gerecht, weil dort jeder neue Versuch einen frischen Wert liefert. 
 
-#### Es kommt noch schlimmer
+Ein anderer Schleifenabstand hilft auf dem Gerät übrigens auch nicht: 16 Werte lassen sich einfach nicht "gerecht" in sechs gleiche Teile teilen.
+
+#### Es kam noch schlimmer
 
 Ein einzelner Würfel ist also schon nicht gerecht. Beim ganzen Wurf kommt es aber noch schlimmer, weil die fünf Würfel nicht unabhängig voneinander sind. Der nächste Würfel startet nicht bei einem neuen, zufälligen Zählerstand, sondern immer genau 10 Befehle nach dem letzten gültigen Wert, also bei D − 2. Damit legt der erste Würfel alle weiteren fest.
 
@@ -350,9 +356,11 @@ Die Hälfte aller Würfe war ein Kniffel. Eine Straße war unmöglich.
 
 Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Wert akzeptiert wird, steht in D immer genau sein Wert minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 11 Befehlen wäre jeder Wurf eine große Straße, bei 13 jeder ein Kniffel. Helfen kann nur etwas, das beim Akzeptieren nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
 
-Dazu kam ein zweites Problem: `Sortiere` löscht D, E und F mit `MOVI #F,GLEICH1` und `HXDZ`. Ich fand das elegant und nützlich, weil es einen Befehl spart (Wert über 3E7, und schon wird alles 0), aber `HXDZ` setzt dabei auch den "Zufallszähler" auf einen festen Wert - weil der TMS1600 sich die Freiheit nimmt, die internen Register des Zählers für seine Konvertierungsberechnungen zu benutzen. 
+#### Aller guten Probleme sind drei...
 
-Nach dem Sortieren eines Wurfs schadet das nicht: Danach wartet `Auswahl` auf eine Taste, und die Wartezeit macht den Zählerstand wieder zufällig. Anders bei einem Eintrag oben (1er bis 6er). Für die Augensumme springt das Programm mit `GOTO Sortiere` zurück ins bedingte Unterprogramm und damit direkt in das `HXDZ`. Danach geht es ohne Tastendruck über `PlusOben`, `WurfEnde` und `Beginn` bis zum nächsten Wurf, der damit schon feststand. Die anderen Felder (Pasch, Full House, Straßen, Kniffel, Chance) brauchen `Sortiere` nicht noch einmal, weil die Gesamtsumme schon vorliegt. Sie sind deshalb nicht betroffen.
+Dazu kam ein weiteres Problem: `Sortiere` löscht D, E und F mit `MOVI #F,GLEICH1` und `HXDZ`. Ich fand das elegant und nützlich, weil es einen Befehl spart (Wert über 3E7, und schon wird alles 0), aber `HXDZ` setzt dabei auch den "Zufallszähler" auf einen festen Wert - weil der TMS1600 sich die Freiheit nimmt, die internen Register des Zählers für seine Konvertierungsberechnungen zu benutzen. 
+
+Nach dem Sortieren eines Wurfs schadet das erstmal nicht: Danach wartet `Auswahl` auf eine Taste, und die Wartezeit macht den Zählerstand wieder zufällig. Anders bei einem Eintrag im oberen Teil des Kniffelblocks (1er bis 6er). Für die Augensumme springt das Programm mit `GOTO Sortiere` zurück ins bedingte Unterprogramm und damit direkt in das `HXDZ`. Danach geht es ohne Tastendruck über `PlusOben`, `WurfEnde` und `Beginn` bis zum nächsten Wurf, der damit schon feststand. Die anderen Felder (*Pasch*, *Full House*, *Straßen*, *Kniffel*, *Chance*) brauchen `Sortiere` nicht noch einmal, weil die Gesamtsumme schon vorliegt. Sie sind deshalb nicht betroffen.
 
 ### Die neue Würfelroutine
 
@@ -372,16 +380,18 @@ Zurück   RET
 ```
 
 - Alle drei Register des Zählers fließen ein, nicht nur das unterste.
-- Ungültige Werte laufen nicht mehr über den Zähler, sondern über einen kleinen Zufallsgenerator.
+- Ungültige Werte laufen nicht mehr über den Zähler, sondern über eine kleine Verteilfunktion (der "gerechte Generator").
 - WL sammelt über alle fünf Würfel eines Wurfs. Dadurch hängen die Würfel kaum noch voneinander ab.
 
-**Der Generator.** AUGEN und WL bilden zusammen eine 8-Bit-Zahl x: AUGEN ist die obere Stelle, WL die untere (x = 16 · AUGEN + WL). Jeder Schritt rechnet x' = 17 · (x + D), modulo 256.
+**Der "gerechte Generator":** AUGEN und WL bilden zusammen eine 8-Bit-Zahl x: AUGEN ist die obere Stelle, WL die untere (x = 16 · AUGEN + WL). Jeder Schritt rechnet x' = 17 · (x + D), modulo 256.
 
 Warum ausgerechnet 17? Weil es auf einem 4-Bit-Rechner fast nichts kostet: 17 · x = x + 16 · x, und mal 16 heißt nur „eine Stelle nach links“. Bei 8 Bit bedeutet das: die untere Stelle auf die obere addieren, also genau ein `ADD WL,AUGEN`. Jeder andere Multiplikator bräuchte Schiebebefehle über beide Stellen samt Überträgen.
 
-Gut ist die 17 auch: Ein Generator der Form x' = a · x + c läuft nur dann durch alle 256 Werte, bevor er sich wiederholt, wenn c ungerade ist und a − 1 durch 4 teilbar. Mit a = 17 und c = 17 · D = DD hex ist beides erfüllt. Ohne diese volle Runde gäbe es kleine Kreise, aus denen manche Startwerte nie zu jeder Augenzahl fänden.
+Gut ist die 17 auch: Eine Verteilfunktion der Form x' = a · x + c läuft nur dann durch alle 256 Werte, bevor sie sich wiederholt, wenn c ungerade ist und a − 1 durch 4 teilbar. Mit a = 17 und c = 17 · D = DD hex ist beides erfüllt. Ohne diese volle Runde gäbe es kleine Perioden, aus denen manche Startwerte nie zu jeder Augenzahl fänden.
 
-**Die Verteilung.** Die Routine akzeptiert einen Wert, wenn AUGEN 0 bis 5 ist. Ist er ungültig, rechnet der Generator so lange weiter, bis ein gültiger Wert kommt. Jeder der 256 möglichen Startwerte landet dabei bei genau einer Augenzahl. Die 256 Startwerte werden also in sechs Klassen aufgeteilt (eine Partition), und die Klassen sind fast gleich groß:
+**Die Verteilung:** Die Routine akzeptiert einen Wert, wenn AUGEN 0 bis 5 ist. Ist er ungültig, rechnet der Generator so lange weiter, bis ein gültiger Wert kommt. Jeder der 256 möglichen Startwerte landet dabei bei genau einer Augenzahl. 
+
+Für die Mathematiker - die 256 Startwerte werden in sechs Klassen aufgeteilt (eine Partition), und die Klassen sind fast gleich groß:
 
 | | Klassengrößen (Augen 1 bis 6) | von |
 |---|---|---|
@@ -397,17 +407,17 @@ Außerdem:
 
 ### Wie gut ist der neue Zufall?
 
-Häufigkeiten bei Würfen mit allen 5 Würfeln im Becher (hier durfte mein bester Freund Claude helfen):
+Häufigkeiten bei 1x Würfeln mit allen 5 Würfeln im Becher (hier durfte mein bester Freund und Simulant *Claude* helfen):
 
 | | alt | neu | fair |
 |---|---|---|---|
 | verschiedene Würfe | 6 | rund 2000 | 7776 |
-| Kniffel | 53 % | 0,09 % | 0,08 % |
-| Vierling | 75 % | 2,2 % | 2,0 % |
-| Drilling | 100 % | 21,0 % | 21,3 % |
-| Full House | 50 % | 3,9 % | 3,9 % |
-| Große Straße | 0 % | 3,3 % | 3,1 % |
-| Kleine Straße | 0 % | 15,6 % | 15,4 % |
+| *Kniffel* | 53 % | 0,09 % | 0,08 % |
+| *Vierling* | 75 % | 2,2 % | 2,0 % |
+| *Drilling* | 100 % | 21,0 % | 21,3 % |
+| *Full House* | 50 % | 3,9 % | 3,9 % |
+| *Große Straße* | 0 % | 3,3 % | 3,1 % |
+| *Kleine Straße* | 0 % | 15,6 % | 15,4 % |
 
 Was bleibt:
 
@@ -418,38 +428,36 @@ Was bleibt:
 
 # Was fehlt oder anders ist...
 
-## Bonuspunkte für weitere Kniffel
+## Bonuspunkte für weitere *Kniffel*
 
-Laut der Spielanleitung von Schmidt Spiele bringt jeder zweite und weitere Kniffel 50 Zusatzpunkte. Sie werden auf der Rückseite des Blocks notiert. Beim amerikanischen Yahtzee sind es sogar 100 Punkte.
+Laut der Spielanleitung von Schmidt Spiele bringt jeder zweite und weitere *Kniffel* 50 Zusatzpunkte. Sie werden auf der Rückseite des Blocks notiert. Beim amerikanischen Yahtzee sind es sogar 100 Punkte.
 
-Der Microtronic kennt diese Regel nicht: Ein weiterer Kniffel bringt nur die Punkte des Feldes, in das er eingetragen wird.
+Der Microtronic kennt diese Regel nicht: Ein weiterer *Kniffel* bringt nur die Punkte des Feldes, in das er eingetragen wird.
 
-## Kniffel als Joker
+## *Kniffel* als Joker
 
-Die offiziellen Regeln sagen: Zusätzlich zu den 50 Punkten darf ein weiterer Kniffel als Joker in ein beliebiges freies Feld, und zwar mit der Höchstpunktzahl dieses Feldes:
+Die offiziellen Regeln sagen: Zusätzlich zu den 50 Punkten darf ein weiterer *Kniffel* als Joker in ein beliebiges freies Feld, und zwar mit der Höchstpunktzahl dieses Feldes:
 
 - **oben:** in jedes freie Zahlenfeld. Fünf Vieren ergeben zum Beispiel 25 Punkte im Fünfer-Feld.
-- **unten:** in jedes freie Feld. Es gibt zum Beispiel 30 Punkte für die Kleine Straße oder 40 Punkte für die Große Straße.
+- **unten:** in jedes freie Feld. Es gibt zum Beispiel 30 Punkte für die *Kleine Straße* oder 40 Punkte für die *Große Straße*.
 
-Ältere Ausgaben waren strenger. Dort musste ein weiterer Kniffel zuerst ins passende Zahlenfeld oben, dann gab es auch die 50 Zusatzpunkte. Als Joker unten war er erst erlaubt, wenn sowohl das Kniffelfeld als auch dieses Zahlenfeld schon belegt waren. War auch unten nichts mehr frei, wurde oben ein Feld gestrichen.
-
-So haben wir das aber **niemals nie nicht** gespielt. Wenn man einen weiteren Kniffel gewürfelt hatte, wurde der dort eingetragen, wo es noch reinpasste. Wenn er nicht mehr unterzubringen war, griff die berühmte _"Schade, schade, leider Pech gehabt"-Regel_.
+So haben wir das aber **niemals nie nicht** gespielt. Wenn man einen weiteren *Kniffel* gewürfelt hatte, wurde der dort eingetragen, wo es noch reinpasste. Wenn er nicht mehr unterzubringen war, griff die berühmte _"Schade, schade, leider Pech gehabt"-Regel_.
 
 Genau so rechnet auch Kniffel2090:
 
-- Ein Kniffel gilt zugleich als Dreierpasch, Viererpasch und Full House. Dort zählt er seine Augensumme beziehungsweise 25 Punkte.
+- Ein *Kniffel* gilt zugleich als *Dreierpasch*, *Viererpasch* und *Full House*. Dort zählt er seine Augensumme beziehungsweise 25 Punkte.
 - Oben zählt er nur im Feld seiner eigenen Augenzahl.
-- Für die Straßen taugt er nicht. Wer ihn dort einträgt, streicht das Feld.
+- Für die *Straßen* taugt er nicht. Wer ihn dort eintragen muss, darf sich der Häme der Mitspieler gewiss sein und eine dicke, runde Null im Feld notieren.
 
-## Kniffel ist (auch) ein Full House!
+## *Kniffel* ist (auch) ein *Full House*!
 
 In meiner Einfalt nahm ich an, darüber müsse gar nicht diskutiert werden. 
 
 Es liegt ja auf der Hand: 5 Gleiche sind - mathematisch - auch 3 Gleiche und 2 Gleiche.
 
-Allerdings musste ich bei meinen Recherchen feststellen, dass es eine Fraktion gibt, die diese unumstößliche Tatsache einfach gänzlich anders sieht. Mit denen würde ich prinzipiell nicht mehr spielen. Vielleicht gibt es auch einen besonderen Platz in der Hölle für "Kniffel ist Full House"-Leugner. Zu meiner Zerknirschung habe ich aber auch erfahren müssen, dass das offizielle Regelwerk diesen Häretikern recht gibt. Tatsächlich muss ein Full House aus zwei unterschiedlichen Paschs bestehen. 
+Allerdings musste ich bei meinen Recherchen feststellen, dass es eine Fraktion gibt, die diese unumstößliche Tatsache einfach gänzlich anders sieht. Mit denen würde ich prinzipiell nicht mehr spielen. Vielleicht gibt es auch einen besonderen Platz in der Hölle für "Kniffel ist Full House"-Leugner. Zu meiner Zerknirschung habe ich aber auch erfahren müssen, dass das offizielle Regelwerk diesen Häretikern recht gibt. Tatsächlich muss ein *Full House* aus zwei unterschiedlichen Paschs bestehen. 
 
-Ich weigere mich aber, das zu programmieren, weil sich jede Faser in mir dagegen sträubt. Trotzdem ein Hinweis zur Güte - Wer Kniffelse und Full Häuser getrennt bewertet wissen will, möge an dieser Stelle eine kleine Anpassung vornehmen:
+Ich weigere mich aber, das zu programmieren, weil sich jede Faser in mir dagegen sträubt. Trotzdem ein Hinweis zur Güte - Wer *Kniffelse* und *Full Häuser* getrennt bewertet wissen will, möge an dieser Stelle eine kleine Anpassung vornehmen:
 
 ```
 Kniffel        ADDI #8,FIGUR2
@@ -464,7 +472,7 @@ Dreier         ADDI #4,FIGUR1
 FullHouse      ADDI #1,FIGUR2
 ```
 
-Wenn erster und fünfter Würfel gleich sind, dann wird mit dieser Änderung kein Full House gewertet. Verwendung auf eigene Gefahr.
+Wenn erster und fünfter Würfel gleich sind, dann wird mit dieser Änderung kein *Full House* gewertet. Verwendung auf eigene Gefahr.
 
 
 
