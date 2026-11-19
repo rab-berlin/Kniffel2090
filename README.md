@@ -257,17 +257,17 @@ Das ist ein Unterprogramm ohne `CALL` und ohne `RET`, mit einem Rücksprung, der
 
 ## Das Problem mit dem Glück
 
-Das Glück ist eine leichte Dirne,
-Und weilt nicht gern am selben Ort;
-Sie streicht das Haar dir von der Stirne
-Und küßt dich rasch und flattert fort.
-
-Frau Unglück hat im Gegentheile
-Dich liebefest an’s Herz gedrückt;
-Sie sagt, sie habe keine Eile,
-Setzt sich zu dir an’s Bett und strickt.
-
-Heinrich Heine
+> Das Glück ist eine leichte Dirne,\
+> Und weilt nicht gern am selben Ort;\
+> Sie streicht das Haar dir von der Stirne\
+> Und küßt dich rasch und flattert fort.
+>
+> Frau Unglück hat im Gegentheile\
+> Dich liebefest an’s Herz gedrückt;\
+> Sie sagt, sie habe keine Eile,\
+> Setzt sich zu dir an’s Bett und strickt.
+>
+> — *Heinrich Heine*
 
 Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dagegen spuckte der Würfelbecher bereits im ersten Wurf großzügig Kniffel, Vierlinge und Drillinge aus, aber nie eine Straße. Der Grund: `RND` ist auf dem 2090 gar kein echter Zufallsgenerator, sondern ein Zähler. 
 
