@@ -274,11 +274,12 @@ Im Emulator mit echtem Zufall lief alles prima. Auf dem echten Microtronic dageg
 
 Höchste Zeit, den Mechanismus dieses "Zufallszählers" mal genauer unter die Lupe zu nehmen. Durch Testprogramme und Versuche hab ich schließlich herausgefunden:
 
-- Jeder ausgeführte Befehl erhöht den Zähler um +3 (wenige Ausnahmen).
-- Solange der Microtronic auf eine Taste wartet (`KIN`), zählt er mit etwa 205 Schritten pro Sekunde weiter (gemessen).
+- Jeder ausgeführte Befehl erhöht den Zähler um +3. Es gibt zwei Ausnahmen: Ein `BRC` oder `BRZ`, der **nicht** springt, zählt nur +1, und `DISP` zählt +4.
+- Solange der Microtronic auf eine Taste wartet (`KIN`), zählt er mit etwa 210 Schritten pro Sekunde weiter (gemessen an zwei Geräten: 210 und 223).
+- Nach einem Tastendruck ist jeder der 4096 Zählerstände gleich wahrscheinlich (gemessen mit 118 Würfen).
 - Die **Reset-Taste** setzt ihn zurück auf 000.
 - Einige Befehle benutzen ihn als Zwischenspeicher und setzen ihn auf einen festen Wert, zum Beispiel `HXDZ`.
-- Der Display-Modus (`DISP`, `DISOUT`) hat keinen Einfluss auf den Zähler.
+- Die Anzeige (Standardanzeige, `DISOUT`, `DISP` mit 1-6 Stellen) hat keinen Einfluss auf den Zähler, nur der Befehl `DISP` selbst zählt eben +4.
 
 Zufällig ist also nur der Zeitpunkt des Tastendrucks. Alles danach lässt sich vorausberechnen.
 
@@ -286,7 +287,7 @@ Zufällig ist also nur der Zeitpunkt des Tastendrucks. Alles danach lässt sich 
 
 Wie im Anleitungsbuch, Teil 1, ursprünglich gelernt, hatte ich zunächst einen einfachen Algorithmus zum Würfeln implementiert. Und der ging so...
 
-#### Die alte Würfelroutine
+#### Die alte Würfelroutine (Version 65)
 
 ```
 Würfel   CMPI #0,AUGEN
@@ -300,8 +301,8 @@ Zurück   RET
 
 Die Routine schaut nur auf Register D, also die letzte Stelle des Zählers (0-F). Ist D 0-5, wird D + 1 der Würfel, sonst liest sie den Zähler neu ab. Weil der Zähler stur weiterzählt, gelten für D zwei feste Regeln:
 
-- **Neuer Versuch:** 3 Befehle, also +9 (nach F geht es bei 0 weiter).
-- **Nächster Würfel:** Zwischen dem gültigen `RND` und dem `RND` für den nächsten Würfel liegen 10 Befehle, also +30. Für D heißt das: −2.
+- **Neuer Versuch:** 3 Befehle (`RND`, `CMPI`, `BRC` springt), also +9 (nach F geht es bei 0 weiter).
+- **Nächster Würfel:** Zwischen dem gültigen `RND` und dem `RND` für den nächsten Würfel liegen 10 Befehle. Zwei davon sind bedingte Sprünge, die nicht springen: `BRC Zufall` nach dem gültigen Wert und `BRC Zurück` beim nächsten Würfel, der ja im Becher liegt. Das macht 8 · 3 + 2 · 1 = 26 Schritte. Für D heißt das: +A, also −6.
 
 Schon ein einzelner Würfel ist dabei nicht gerecht, selbst wenn D beim ersten `RND` völlig zufällig ist. Ein ungültiger Wert bringt keinen neuen Zufall, denn der nächste Versuch liegt immer genau 9 höher. D läuft also immer dieselbe Runde ab:
 
@@ -328,32 +329,54 @@ Ein anderer Schleifenabstand hilft auf dem Gerät übrigens auch nicht: 16 Werte
 
 #### Es kam noch schlimmer
 
-Ein einzelner Würfel ist also schon nicht gerecht. Beim ganzen Wurf kommt es aber noch schlimmer, weil die fünf Würfel nicht unabhängig voneinander sind. Der nächste Würfel startet nicht bei einem neuen, zufälligen Zählerstand, sondern immer genau 10 Befehle nach dem letzten gültigen Wert, also bei D − 2. Damit legt der erste Würfel alle weiteren fest.
+Ein einzelner Würfel ist also schon nicht gerecht. Beim ganzen Wurf kommt es aber noch schlimmer, weil die fünf Würfel nicht unabhängig voneinander sind. Der nächste Würfel startet nicht bei einem neuen, zufälligen Zählerstand, sondern immer genau 26 Schritte nach dem letzten gültigen Wert, also bei D − 6. Damit legt der erste Würfel alle weiteren fest.
 
 Zufällig ist nur D beim allerersten `RND` des Wurfs. Ein Beispiel mit D = 4 (gewürfelt wird von `W5` nach `W1`):
 
 | Würfel | D | Ergebnis |
 |---|---|---|
 | `W5` | 4 | 5 |
-| `W4` | 4 − 2 = 2 | 3 |
-| `W3` | 2 − 2 = 0 | 1 |
-| `W2` | 0 − 2 = E, +9 → 7, +9 → 0 | 1 |
-| `W1` | wieder E → 7 → 0 | 1 |
+| `W4` | 4 − 6 = E, +9 → 7, +9 → 0 | 1 |
+| `W3` | 0 − 6 = A, +9 → 3 | 4 |
+| `W2` | 3 − 6 = D → 6 → F → 8 → 1 | 2 |
+| `W1` | 1 − 6 = B → 4 | 5 |
 
-Angezeigt wird 1 1 1 3 5. Sobald eine 1 oder 2 fällt, dreht sich D im Kreis: Nach einer 1 landet D immer auf E, die Schleife läuft E → 7 → 0, und das ist wieder eine 1. Nach einer 2 läuft sie F → 8 → 1, und das ist wieder eine 2. Aus den 16 möglichen Startwerten werden so genau 6 Würfe:
+Angezeigt wird 1 2 4 5 5. Aus den 16 möglichen Startwerten werden so genau 6 Würfe:
 
 | D beim 1. `RND` | Wurf |
 |---|---|
-| 0, 7, E | 1 1 1 1 1 |
-| 1, 6, 8, D, F | 2 2 2 2 2 |
-| 2, 9 | 1 1 1 1 3 |
-| 3, A | 2 2 2 2 4 |
-| 4, B | 1 1 1 3 5 |
-| 5, C | 2 2 2 4 6 |
+| 0, 7, E | 1 1 2 4 5 |
+| 1, 6, 8, D, F | 1 2 2 4 5 |
+| 2, 9 | 1 2 3 5 6 |
+| 3, A | 1 2 4 4 5 |
+| 4, B | 1 2 4 5 5 |
+| 5, C | 1 2 4 5 6 |
 
-Die Hälfte aller Würfe war ein *Kniffel*. Eine *Straße* war unmöglich.
+Jeder Wurf enthält eine 1, eine 2 und eine 5. Viermal gibt es einen *Pasch*, zweimal gar nichts. *Drilling*, *Kniffel* und *Straße* sind im ersten Wurf unmöglich.
 
-Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Wert akzeptiert wird, steht in D immer genau die gewürfelte Augenzahl minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 11 Befehlen wäre jeder Wurf eine *Große Straße*, bei 13 jeder ein *Kniffel*. Helfen kann nur etwas, das beim Akzeptieren nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
+Moment mal – das passt nicht zu den *Kniffeln*, *Vierlingen* und *Drillingen* von oben! Des Rätsels Lösung steckt vermutlich in der Versionsgeschichte. Bis Version 57 begann die Routine so:
+
+```
+Würfel   CMPI #0,AUGEN
+         BRZ Zufall           Würfel im Becher: springen
+         RET
+Zufall   RND
+```
+
+Erst Version 65 hat daraus `BRC Zurück` gemacht und damit einen Befehl gespart. Für den Zähler ist das ein Unterschied: Liegt der Würfel im Becher, springt `BRZ Zufall` und zählt +3, während `BRC Zurück` nicht springt und nur +1 zählt. In Version 57 liegen zwischen zwei Würfeln also 28 Schritte, für D −4 statt −6. Und dann sehen die sechs Würfe ganz anders aus:
+
+| D beim 1. `RND` | Version 57 | Version 65 |
+|---|---|---|
+| 0, 7, E | 1 2 2 2 6 | 1 1 2 4 5 |
+| 1, 6, 8, D, F | 2 2 2 2 2 | 1 2 2 4 5 |
+| 2, 9 | 1 2 2 3 6 | 1 2 3 5 6 |
+| 3, A | 2 2 2 2 4 | 1 2 4 4 5 |
+| 4, B | 1 2 2 5 6 | 1 2 4 5 5 |
+| 5, C | 2 2 2 2 6 | 1 2 4 5 6 |
+
+Mit Version 57 war fast jeder dritte Wurf (5/16) ein *Kniffel* und drei von vier Würfen mindestens ein *Drilling* – mit Version 65 dagegen nie. Eine *Straße* gab es in beiden nicht. Ein einziger gesparter Befehl hat also aus dem Kniffel-Regen eine Kniffel-Dürre gemacht. Die Gegenprobe mit Version 65 am echten Gerät steht noch aus.
+
+Hilft ein anderer Abstand zwischen den Würfeln? Nein. Wenn ein Wert akzeptiert wird, steht in D immer genau die gewürfelte Augenzahl minus 1, egal wo der Zähler vorher stand. Der nächste Würfel hängt also nur vom vorigen ab, und der erste Würfel legt den ganzen Wurf fest. Sechs mögliche erste Würfel ergeben sechs mögliche Würfe. Ein anderer Abstand ändert nur, *welche* sechs: Bei 32 Schritten (D bleibt gleich) wäre jeder Wurf ein *Kniffel*, bei 33 (D + 1) jeder eine *Große Straße*. Helfen kann nur etwas, das beim Akzeptieren nicht verloren geht und von Würfel zu Würfel weitergetragen wird.
 
 #### Aller guten Probleme sind drei...
 
@@ -406,23 +429,24 @@ Außerdem:
 
 ### Wie gut ist der neue Zufall?
 
-Häufigkeiten bei 1x Würfeln mit allen 5 Würfeln im Becher (hier durfte mein bester Freund und Simulant *Claude* helfen):
+Häufigkeiten bei 1x Würfeln mit allen 5 Würfeln im Becher (hier durfte mein bester Freund und Simulant *Claude* helfen). Gerechnet ist mit dem gemessenen Zählermodell und allen 4096 Zählerständen, die nach einem Tastendruck gleich wahrscheinlich sind:
 
-| | alt | neu | fair |
-|---|---|---|---|
-| verschiedene Würfe | 6 | rund 2000 | 7776 |
-| *Kniffel* | 50 % | 0,09 % | 0,08 % |
-| *Vierling* | 75 % | 2,2 % | 2,0 % |
-| *Drilling* | 100 % | 21,0 % | 21,3 % |
-| *Full House* | 50 % | 3,9 % | 3,9 % |
-| *Große Straße* | 0 % | 3,3 % | 3,1 % |
-| *Kleine Straße* | 0 % | 15,6 % | 15,4 % |
+| | Version 57 | Version 65 | neu | fair |
+|---|---|---|---|---|
+| verschiedene Würfe | 6 | 6 | rund 1100 | 7776 |
+| *Kniffel* | 31 % | 0 % | 0,24 % | 0,08 % |
+| *Vierling* | 56 % | 0 % | 1,9 % | 2,0 % |
+| *Drilling* | 75 % | 0 % | 19,7 % | 21,3 % |
+| *Full House* | 31 % | 0 % | 3,8 % | 3,9 % |
+| *Große Straße* | 0 % | 0 % | 4,3 % | 3,1 % |
+| *Kleine Straße* | 0 % | 0 % | 16,7 % | 15,4 % |
 
 Was bleibt:
 
-- Die Augenzahlen sind nicht ganz gleich wahrscheinlich, sondern liegen je nach Spielsituation zwischen etwa 15 % und 18 % statt bei 16,7 %. Ganz gleichmäßig geht es mit 8 Bit grundsätzlich nicht, weil 256 nicht durch 6 teilbar ist.
-- Pro Tastendruck gibt der "Zufallszähler" höchstens 4096 verschiedene Ausgangslagen her.
-- Ein Wurf dauert etwas länger, im Mittel gut 2 Sekunden, selten bis zu 4,5 Sekunden. Die Würfel rollen also ein bisschen länger über den Tisch. Unendliche Spannung!
+- Ein einzeln nachgeworfener Würfel zeigt jede Augenzahl mit 15,6-17,6 % statt 16,7 % (die Klassengrößen oben). Beim vollen Wurf sind die fünf Würfel nicht ganz unabhängig, je nach Würfel liegt eine Augenzahl dann zwischen 14 % und 21 %. Ganz gleichmäßig geht es mit 8 Bit grundsätzlich nicht, weil 256 nicht durch 6 teilbar ist.
+- *Kniffel* und *Große Straße* kommen beim ersten Wurf etwas zu oft: der *Kniffel* bei 10 von 4096 Zählerständen statt bei gut 3, die *Große Straße* fast 40 % öfter als fair. Mit dem ersten, ungenaueren Zählermodell (+3 für jeden Befehl) sah das noch besser aus. Andere Konstanten statt der 13 in `ADDI #D,WL` habe ich durchgerechnet: Keine ist durchweg besser, und mit der 13 hängen die fünf Würfel eines vollen Wurfs am wenigsten voneinander ab. Die Routine bleibt also, wie sie ist. Außerdem ist kein Programmschritt mehr frei.
+- Pro Tastendruck gibt der "Zufallszähler" höchstens 4096 verschiedene Ausgangslagen her. Daraus werden beim ersten Wurf rund 1100 verschiedene Würfe.
+- Ein Wurf dauert länger: Das Würfeln aller fünf Würfel braucht im Mittel 110 statt 77 Befehle, nach dem Zeitmodell des Emulators (Anzeige an) also knapp 3 statt 2 Sekunden, selten bis zu 4,6 Sekunden. Die Würfel rollen also ein bisschen länger über den Tisch. Unendliche Spannung!
 
 
 # Was fehlt oder anders ist...
